@@ -70,9 +70,11 @@
     "compile": "tsc",
     "lint": "eslint sources --ext ts",
     "build": "npm run compile && npm run lint",
-    "integration-test": "npm run build && vscode-test",
-    "unit-test": "npm run build && c8 mocha",
-    "test": "npm run unit-test"
+    "just-integration-tests": "c8 --src=sources vscode-test",
+    "integration-tests": "npm run build && npm run just-integration-tests",
+    "just-unit-tests": "c8 --exclude sources/extension.ts --exclude tests/integration mocha --spec=outputs/tests/unit",
+    "unit-tests": "npm run build && npm run just-unit-tests",
+    "test": "npm run build && npm run just-unit-tests && npm run just-integration-tests"
   },
   "devDependencies": {
     "@types/vscode": "^1.84.0",
@@ -94,7 +96,7 @@
   "mocha": {
       "color": true,
       "ui": "tdd",
-      "spec": "./outputs/unit-tests/**/*.js",
+      "spec": "./outputs/tests/unit/**/*.js",
       "extension": [
           "js"
       ],
@@ -104,7 +106,7 @@
   },
   "c8": {
     "all": true,
-    "src": ["sources", "unit-tests"],
+    "src": ["sources", "tests"],
     "temp-directory": "outputs/coverage-temp",
     "report-dir": "outputs/coverage",
     "reporter": [
