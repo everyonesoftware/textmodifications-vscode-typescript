@@ -2,6 +2,9 @@ import * as vscode from 'vscode';
 
 import * as text from "./text";
 
+export const toLowercaseCommandId: string = "textmodifications-vscode.toLowercase";
+export const toUppercaseCommandId: string = "textmodifications-vscode.toUppercase";
+
 export function activate(context: vscode.ExtensionContext): void
 {
     async function applyModificationToSelection(modification: (value: string) => string): Promise<void>
@@ -22,15 +25,15 @@ export function activate(context: vscode.ExtensionContext): void
         }
     }
 
-    context.subscriptions.push(vscode.commands.registerCommand("textmodifications-vscode.toLowercase", () =>
-    {
-        return applyModificationToSelection(text.toLowercase);
-    }));
-
-    context.subscriptions.push(vscode.commands.registerCommand("textmodifications-vscode.toUppercase", () =>
-    {
-        return applyModificationToSelection(text.toUppercase);
-    }));
+    context.subscriptions.push(
+        vscode.commands.registerCommand(toLowercaseCommandId, () =>
+        {
+            return applyModificationToSelection(text.toLowercase);
+        }),
+        vscode.commands.registerCommand(toUppercaseCommandId, () =>
+        {
+            return applyModificationToSelection(text.toUppercase);
+        }));
 }
 
 export function deactivate(): void
