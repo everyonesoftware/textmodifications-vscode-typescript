@@ -17,11 +17,11 @@ jobs:
       - run: npm ci
 
       - name: Run unit tests
-        run: npm run unit-test
+        run: npm run unit-tests
 
       - name: Run integration tests (on Linux)
-        run: xvfb-run -a npm run integration-test
+        run: xvfb-run -a npm run integration-tests
         if: runner.os == 'Linux'
       - name: Run integration tests (not on Linux)
-        run: npm run integration-test
+        run: npm run integration-tests
         if: runner.os != 'Linux'

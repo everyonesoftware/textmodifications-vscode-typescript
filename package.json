@@ -70,9 +70,9 @@
     "compile": "tsc",
     "lint": "eslint sources --ext ts",
     "build": "npm run compile && npm run lint",
-    "integration-test": "npm run build && vscode-test",
-    "unit-test": "npm run build && c8 mocha",
-    "test": "npm run unit-test"
+    "integration-tests": "npm run build && vscode-test",
+    "unit-tests": "npm run build && c8 mocha",
+    "test": "npm run unit-tests && npm run integration-tests"
   },
   "devDependencies": {
     "@types/vscode": "^1.84.0",
@@ -94,7 +94,7 @@
   "mocha": {
       "color": true,
       "ui": "tdd",
-      "spec": "./outputs/unit-tests/**/*.js",
+      "spec": "./outputs/tests/unit/**/*.js",
       "extension": [
           "js"
       ],

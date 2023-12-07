@@ -1,6 +1,6 @@
 import * as assert from "assert"
 
-import * as text from "../sources/text"
+import * as text from "../../sources/text"
 
 suite("text.ts", () =>
 {
