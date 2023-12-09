@@ -68,7 +68,7 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc",
-    "lint": "eslint sources --ext ts",
+    "lint": "eslint sources --ext ts --max-warnings 0",
     "build": "npm run compile && npm run lint",
     "just-integration-tests": "c8 --src=sources vscode-test",
     "integration-tests": "npm run build && npm run just-integration-tests",

@@ -1,4 +1,15 @@
 /**
+ * A collection of parameters that can be passed to an assert error message function.
+ */
+export interface AssertMessageParameters
+{
+    expected: string,
+    actual: string,
+    expression?: string,
+    message?: string,
+}
+
+/**
  * A collection of condition methods that can be used to assert the state of an application.
  */
 export class Condition
@@ -26,38 +37,102 @@ export class Condition
     }
 
     /**
+     * Create an error message based on the provided parameters.
+     * @param parameters The parameters to use to create the error message.
+     */
+    private static createErrorMessage(parameters: AssertMessageParameters): string
+    {
+        let result: string = "";
+
+        if (parameters.message)
+        {
+            result += `Message: ${parameters.message}`;
+        }
+
+        if (parameters.expression)
+        {
+            if (result)
+            {
+                result += "\n";
+            }
+            result += `Expression: ${parameters.expression}`;
+        }
+
+        if (result)
+        {
+            result += "\n";
+        }
+        result += `Expected: ${parameters.expected}`;
+
+        if (result)
+        {
+            result += "\n";
+        }
+        result += `Actual: ${parameters.actual}`;
+
+        return result;
+    }
+
+    private createError(parameters: AssertMessageParameters): Error
+    {
+        const message: string = Condition.createErrorMessage(parameters);
+        return this.createErrorFunction(message);
+    }
+
+    /**
      * Assert that the provided value is not undefined and not null.
      * @param value The value to check.
+     * @param expression The name of the expression that produced the value.
+     * @param message An additional message that will be included with the error.
      */
-    public assertNotUndefinedAndNotNull<T>(value: T): asserts value is NonNullable<T>
+    public assertNotUndefinedAndNotNull<T>(value: T, expression?: string, message?: string): asserts value is NonNullable<T>
     {
         if (value === undefined || value === null)
         {
-            throw this.createErrorFunction(`Expected: not undefined and not null, Actual: ${value}`);
+            throw this.createError({
+                expected: "not undefined and not null",
+                actual: `${value}`,
+                expression: expression,
+                message: message,
+            });
         }
     }
 
     /**
      * Assert that the provided value is true.
      * @param value The value to check.
+     * @param expression The name of the expression that produced the value.
+     * @param message An additional message that will be included with the error.
      */
-    public assertTrue(value: boolean): asserts value is true
+    public assertTrue(value: boolean, expression?: string, message?: string): asserts value is true
     {
         if (!value)
         {
-            throw this.createErrorFunction(`Expected: true, Actual: ${value}`);
+            throw this.createError({
+                expected: `${true}`,
+                actual: `${value}`,
+                expression: expression,
+                message: message,
+            });
         }
     }
 
     /**
      * Assert that the provided value is false.
      * @param value The value to check.
+     * @param expression The name of the expression that produced the value.
+     * @param message An additional message that will be included with the error.
      */
-    public assertFalse(value: boolean): asserts value is false
+    public assertFalse(value: boolean, expression?: string, message?: string): asserts value is false
     {
         if (value)
         {
-            throw this.createErrorFunction(`Expected: false, Actual: ${value}`);
+            throw this.createError({
+                expected: `${false}`,
+                actual: `${value}`,
+                expression: expression,
+                message: message,
+            });
         }
     }
 }

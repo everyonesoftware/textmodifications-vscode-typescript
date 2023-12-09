@@ -9,6 +9,8 @@ export function toUppercase(text: string): string
 
 export function toLowercase(text: string): string
 {
+    Pre.Condition.assertNotUndefinedAndNotNull(text);
+
     return text.toLowerCase();
 }
 
