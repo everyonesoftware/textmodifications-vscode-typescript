@@ -33,4 +33,22 @@ suite("text.ts", () =>
         toUppercaseTest("a", "A");
         toUppercaseTest("B", "B");
     });
+
+    // suite("toCamelCase(string)", () =>
+    // {
+    //     function toCamelCaseTest(value: string, expected: string): void
+    //     {
+    //         test(`with "${value}"`, () =>
+    //         {
+    //             assert.strictEqual(expected, text.toCamelCase(value));
+    //         });
+    //     }
+
+    //     toCamelCaseTest("", "");
+    //     toCamelCaseTest("abc", "abc");
+    //     toCamelCaseTest("abcDef", "abcDef");
+    //     toCamelCaseTest("abc def", "abcDef");
+    //     toCamelCaseTest("abc def ghi", "abcDefGhi");
+    //     toCamelCaseTest("abc DEF ghi", "abcDEFGhi");
+    // });
 });
