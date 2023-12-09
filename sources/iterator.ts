@@ -1,0 +1,103 @@
+import { Pre } from "./condition";
+
+/**
+ * A type that can be used to iterate over a collection.
+ */
+export abstract class Iterator<T>
+{
+    /**
+     * Move to the next value in the collection. Return whether this {@link Iterator} points to a
+     * value after the move.
+     */
+    public abstract next(): boolean;
+
+    /**
+     * Get whether this {@link Iterator} has started iterating over the values in the collection.
+     */
+    public abstract hasStarted(): boolean;
+
+    /**
+     * Get whether this {@link Iterator} currently points at a value in the collection.
+     */
+    public abstract hasCurrent(): boolean;
+
+    /**
+     * Get the value that this {@link Iterator} points to.
+     */
+    public abstract getCurrent(): T;
+}
+
+/**
+ * An {@link Iterator} that maintains the current index of the value being pointed at in the
+ * collection.
+ */
+export abstract class IndexableIterator<T> extends Iterator<T>
+{
+    /**
+     * Get the current index of the value this {@link IndexableIterator} points to.
+     */
+    public abstract getCurrentIndex(): number;
+}
+
+/**
+ * An {@link Iterator} that iterates over the characters in a {@link string}.
+ */
+export class StringIterator extends IndexableIterator<string>
+{
+    private readonly value: string;
+    private currentIndex: number;
+    private started: boolean;
+
+    public constructor(value: string)
+    {
+        super();
+
+        this.value = value;
+        this.currentIndex = 0;
+        this.started = false;
+    }
+
+    public static create(value: string): StringIterator
+    {
+        Pre.Condition.assertNotUndefinedAndNotNull(value, "value");
+
+        return new StringIterator(value);
+    }
+
+    public override getCurrentIndex(): number
+    {
+        Pre.Condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
+
+        return this.currentIndex;
+    }
+
+    public override next(): boolean
+    {
+        if (!this.hasStarted())
+        {
+            this.started = true;
+        }
+        else if (this.hasCurrent())
+        {
+            this.currentIndex++;
+        }
+        return this.hasCurrent();
+    }
+
+    public override hasStarted(): boolean
+    {
+        return this.started;
+    }
+
+    public override hasCurrent(): boolean
+    {
+        return this.hasStarted() && this.currentIndex < this.value.length;
+    }
+
+    public override getCurrent(): string
+    {
+        Pre.Condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
+
+        return this.value[this.currentIndex];
+    }
+}
