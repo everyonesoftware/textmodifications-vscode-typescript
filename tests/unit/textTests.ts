@@ -34,21 +34,21 @@ suite("text.ts", () =>
         toUppercaseTest("B", "B");
     });
 
-    // suite("toCamelCase(string)", () =>
-    // {
-    //     function toCamelCaseTest(value: string, expected: string): void
-    //     {
-    //         test(`with "${value}"`, () =>
-    //         {
-    //             assert.strictEqual(expected, text.toCamelCase(value));
-    //         });
-    //     }
+    suite("toCamelCase(string)", () =>
+    {
+        function toCamelCaseTest(value: string, expected: string): void
+        {
+            test(`with "${value}"`, () =>
+            {
+                assert.strictEqual(text.toCamelCase(value), expected);
+            });
+        }
 
-    //     toCamelCaseTest("", "");
-    //     toCamelCaseTest("abc", "abc");
-    //     toCamelCaseTest("abcDef", "abcDef");
-    //     toCamelCaseTest("abc def", "abcDef");
-    //     toCamelCaseTest("abc def ghi", "abcDefGhi");
-    //     toCamelCaseTest("abc DEF ghi", "abcDEFGhi");
-    // });
+        toCamelCaseTest("", "");
+        toCamelCaseTest("abc", "abc");
+        toCamelCaseTest("abcDef", "abcDef");
+        toCamelCaseTest("abc def", "abcDef");
+        toCamelCaseTest("abc def ghi", "abcDefGhi");
+        toCamelCaseTest("abc DEF ghi", "abcDEFGhi");
+    });
 });

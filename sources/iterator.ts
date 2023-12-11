@@ -25,6 +25,19 @@ export abstract class Iterator<T>
      * Get the value that this {@link Iterator} points to.
      */
     public abstract getCurrent(): T;
+
+    /**
+     * Move to the first value if this {@link Iterator} hasn't started yet.
+     * @returns This object for method chaining.
+     */
+    public start(): this
+    {
+        if (!this.hasStarted())
+        {
+            this.next();
+        }
+        return this;
+    }
 }
 
 /**
