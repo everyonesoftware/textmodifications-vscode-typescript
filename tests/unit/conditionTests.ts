@@ -1,6 +1,8 @@
 import * as assert from "assert"
 
 import { Condition, Pre, Post, PostConditionError, PreConditionError } from "../../sources/condition"
+import { escapeAndQuote, join } from "../../sources/strings";
+import { andList } from "../../sources/english";
 
 suite(Condition.name, () =>
 {
@@ -145,14 +147,54 @@ suite(Condition.name, () =>
             assert.strictEqual(value, false);
         });
     });
+
+    suite("assertNotEmpty(string,string?,string?)", () =>
+    {
+        function assertNotEmptyTest(value: string, expression: string | undefined, message: string | undefined, expectedError?: Error): void
+        {
+            test(`with ${andList([value, expression, message].map(x => escapeAndQuote(x)))}`, () =>
+            {
+                const condition: Condition = Condition.create();
+                if (expectedError)
+                {
+                    assert.throws(() => condition.assertNotEmpty(value, expression, message), expectedError);
+                }
+                else
+                {
+                    condition.assertNotEmpty(value, expression, message);
+                }
+            });
+        }
+
+        assertNotEmptyTest(undefined!, "fake-expression", "fake-message", new Error(join("\n", [
+            "Message: fake-message",
+            "Expression: fake-expression",
+            "Expected: not undefined and not null",
+            "Actual: undefined",
+        ])));
+        assertNotEmptyTest(null!, "fake-expression", "fake-message", new Error(join("\n", [
+            "Message: fake-message",
+            "Expression: fake-expression",
+            "Expected: not undefined and not null",
+            "Actual: null",
+        ])));
+        assertNotEmptyTest("", "fake-expression", "fake-message", new Error(join("\n", [
+            "Message: fake-message",
+            "Expression: fake-expression",
+            "Expected: not empty",
+            "Actual: \"\"",
+        ])));
+        assertNotEmptyTest(" ", "fake-expression", "fake-message");
+        assertNotEmptyTest("a", "fake-expression", "fake-message");
+    });
 });
 
 suite(Pre.name, () =>
 {
     test("Condition is not undefined and not null", () =>
     {
-        assert.notStrictEqual(Pre.Condition, undefined);
-        assert.notStrictEqual(Pre.Condition, null);
+        assert.notStrictEqual(Pre.condition, undefined);
+        assert.notStrictEqual(Pre.condition, null);
     });
 });
 
@@ -177,8 +219,8 @@ suite(Post.name, () =>
 {
     test("Condition is not undefined and not null", () =>
     {
-        assert.notStrictEqual(Post.Condition, undefined);
-        assert.notStrictEqual(Post.Condition, null);
+        assert.notStrictEqual(Post.condition, undefined);
+        assert.notStrictEqual(Post.condition, null);
     });
 });
 

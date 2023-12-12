@@ -57,6 +57,39 @@ suite(StringIterator.name, () =>
         createTest("abc");
     });
 
+    suite("start()", () =>
+    {
+        test("with empty iterator", () =>
+        {
+            const iterator = StringIterator.create("");
+            assert.strictEqual(iterator.hasStarted(), false);
+
+            for (let i: number = 0; i < 2; i++)
+            {
+                const startResult = iterator.start();
+                assert.strictEqual(startResult, iterator);
+                assert.strictEqual(iterator.hasStarted(), true);
+                assert.strictEqual(iterator.hasCurrent(), false);
+            }
+        });
+
+        test("with non-empty iterator", () =>
+        {
+            const iterator = StringIterator.create("abc");
+            assert.strictEqual(iterator.hasStarted(), false);
+
+            for (let i: number = 0; i < 2; i++)
+            {
+                const startResult = iterator.start();
+                assert.strictEqual(startResult, iterator);
+                assert.strictEqual(iterator.hasStarted(), true);
+                assert.strictEqual(iterator.hasCurrent(), true);
+                assert.strictEqual(iterator.getCurrent(), "a");
+                assert.strictEqual(iterator.getCurrentIndex(), 0);
+            }
+        });
+    });
+
     suite("next()", () =>
     {
         function nextTest(value: string): void

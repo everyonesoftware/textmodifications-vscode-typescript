@@ -72,14 +72,14 @@ export class StringIterator extends IndexableIterator<string>
 
     public static create(value: string): StringIterator
     {
-        Pre.Condition.assertNotUndefinedAndNotNull(value, "value");
+        Pre.condition.assertNotUndefinedAndNotNull(value, "value");
 
         return new StringIterator(value);
     }
 
     public override getCurrentIndex(): number
     {
-        Pre.Condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
+        Pre.condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
 
         return this.currentIndex;
     }
@@ -109,7 +109,7 @@ export class StringIterator extends IndexableIterator<string>
 
     public override getCurrent(): string
     {
-        Pre.Condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
+        Pre.condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
 
         return this.value[this.currentIndex];
     }

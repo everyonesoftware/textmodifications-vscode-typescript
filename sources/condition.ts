@@ -135,6 +135,20 @@ export class Condition
             });
         }
     }
+
+    public assertNotEmpty(value: string, expression?: string, message?: string): asserts value is string
+    {
+        this.assertNotUndefinedAndNotNull(value, expression, message);
+        if (value.length === 0)
+        {
+            throw this.createError({
+                expected: "not empty",
+                actual: `""`,
+                expression: expression,
+                message: message,
+            });
+        }
+    }
 }
 
 /**
@@ -167,7 +181,7 @@ export class Pre
     /**
      * The condition object that can be used to assert pre-conditions.
      */
-    public static readonly Condition: Condition = Condition.create((message: string) => new PreConditionError(message));
+    public static readonly condition: Condition = Condition.create((message: string) => new PreConditionError(message));
 }
 
 /**
@@ -178,5 +192,5 @@ export class Post
     /**
      * The condition object that can be used to assert post-conditions.
      */
-    public static readonly Condition: Condition = Condition.create((message: string) => new PostConditionError(message));
+    public static readonly condition: Condition = Condition.create((message: string) => new PostConditionError(message));
 }

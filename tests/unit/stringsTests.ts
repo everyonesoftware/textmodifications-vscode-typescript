@@ -1,6 +1,8 @@
-import * as assert from "assert"
+import * as assert from "assert";
 
-import * as strings from "../../sources/strings"
+import * as english from "../../sources/english";
+import * as strings from "../../sources/strings";
+import { PreConditionError } from "../../sources/condition";
 
 suite("strings", () =>
 {
@@ -8,7 +10,7 @@ suite("strings", () =>
     {
         function joinTest(separator: string, values: string[], expected: string): void
         {
-            test(`with ${strings.escapeAndQuote(separator)} and ${values.map(v => strings.escapeAndQuote(v))}`, () =>
+            test(`with ${english.andList([strings.escapeAndQuote(separator), JSON.stringify(values.map(v => strings.escapeAndQuote(v)))])}`, () =>
             {
                 assert.strictEqual(strings.join(separator, values), expected);
             });
@@ -44,7 +46,7 @@ suite("strings", () =>
     {
         function escapeTest(value: string | undefined | null, dontEscape: string[] | undefined, expected: string): void
         {
-            test(`with ${strings.escapeAndQuote(value)} and ${dontEscape?.map((value: string) => strings.escapeAndQuote(value))}`, () =>
+            test(`with ${english.andList([strings.escapeAndQuote(value), JSON.stringify(dontEscape?.map((value: string) => strings.escapeAndQuote(value)))])}`, () =>
             {
                 const result: string = strings.escape(value, dontEscape);
                 assert.strictEqual(result, expected);
@@ -73,7 +75,7 @@ suite("strings", () =>
     {
         function quoteTest(value: string | undefined | null, quote: string | undefined, expected: string): void
         {
-            test(`with ${strings.escapeAndQuote(value)} and ${strings.escapeAndQuote(quote)}`, () =>
+            test(`with ${english.andList([value, quote].map(x => strings.escapeAndQuote(x)))}`, () =>
             {
                 const result: string = strings.quote(value, quote);
                 assert.strictEqual(result, expected);
@@ -93,7 +95,7 @@ suite("strings", () =>
     {
         function escapeAndQuoteTest(value: string | undefined | null, quote: string | undefined, dontEscape: string[] | undefined, expected: string): void
         {
-            test(`with ${strings.escapeAndQuote(value)}, ${strings.escapeAndQuote(quote)}, and ${dontEscape?.map((value: string) => strings.escapeAndQuote(value))}`, () =>
+            test(`with ${english.andList([strings.escapeAndQuote(value), strings.escapeAndQuote(quote), JSON.stringify(dontEscape?.map(x => strings.escapeAndQuote(x)))])}`, () =>
             {
                 const result: string = strings.escapeAndQuote(value, quote, dontEscape);
                 assert.strictEqual(result, expected);
@@ -116,5 +118,46 @@ suite("strings", () =>
         escapeAndQuoteTest("\t", undefined, [], `"\\t"`);
         escapeAndQuoteTest("\t", undefined, ["\n"], `"\\t"`);
         escapeAndQuoteTest("\t", undefined, ["\t"], `"\t"`);
+    });
+
+    suite("isWhitespace(string)", () =>
+    {
+        function isWhitespaceErrorTest(value: string | undefined | null, expectedError: Error): void
+        {
+            test(`with ${strings.escapeAndQuote(value)}`, () =>
+            {
+                assert.throws(() => strings.isWhitespace(value!), expectedError);
+            });
+        }
+
+        isWhitespaceErrorTest(undefined, new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not undefined and not null",
+            "Actual: undefined",
+        ])));
+        isWhitespaceErrorTest(null, new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not undefined and not null",
+            "Actual: null",
+        ])));
+
+        function isWhitespaceTest(value: string, expected: boolean): void
+        {
+            test(`with ${strings.escapeAndQuote(value)}`, () =>
+            {
+                assert.strictEqual(strings.isWhitespace(value), expected);
+            });
+        }
+
+        isWhitespaceTest("", true);
+        isWhitespaceTest(" ", true);
+        isWhitespaceTest("  ", true);
+        isWhitespaceTest("\n", true);
+        isWhitespaceTest("\r", true);
+        isWhitespaceTest("\t", true);
+
+        isWhitespaceTest("a", false);
+        isWhitespaceTest("_", false);
+        isWhitespaceTest("-", false);
     });
 });
