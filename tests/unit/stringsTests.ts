@@ -140,6 +140,11 @@ suite("strings", () =>
             "Expected: not undefined and not null",
             "Actual: null",
         ])));
+        isWhitespaceErrorTest("", new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not empty",
+            "Actual: \"\"",
+        ])));
 
         function isWhitespaceTest(value: string, expected: boolean): void
         {
@@ -149,7 +154,6 @@ suite("strings", () =>
             });
         }
 
-        isWhitespaceTest("", true);
         isWhitespaceTest(" ", true);
         isWhitespaceTest("  ", true);
         isWhitespaceTest("\n", true);
@@ -159,5 +163,178 @@ suite("strings", () =>
         isWhitespaceTest("a", false);
         isWhitespaceTest("_", false);
         isWhitespaceTest("-", false);
+        isWhitespaceTest(" f", false);
+    });
+
+    suite("isLetter(string)", () =>
+    {
+        function isLetterErrorTest(value: string | undefined | null, expectedError: Error): void
+        {
+            test(`with ${strings.escapeAndQuote(value)}`, () =>
+            {
+                assert.throws(() => strings.isLetter(value!), expectedError);
+            });
+        }
+
+        isLetterErrorTest(undefined, new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not undefined and not null",
+            "Actual: undefined",
+        ])));
+        isLetterErrorTest(null, new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not undefined and not null",
+            "Actual: null",
+        ])));
+        isLetterErrorTest("", new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not empty",
+            "Actual: \"\"",
+        ])));
+
+        function isLetterTest(value: string, expected: boolean): void
+        {
+            test(`with ${strings.escapeAndQuote(value)}`, () =>
+            {
+                assert.strictEqual(strings.isLetter(value), expected);
+            });
+        }
+
+        isLetterTest("a", true);
+        isLetterTest("m", true);
+        isLetterTest("z", true);
+        isLetterTest("A", true);
+        isLetterTest("N", true);
+        isLetterTest("Z", true);
+        
+        isLetterTest(" ", false);
+        isLetterTest("  ", false);
+        isLetterTest("\n", false);
+        isLetterTest("\r", false);
+        isLetterTest("\t", false);
+        isLetterTest("_", false);
+        isLetterTest("-", false);
+        isLetterTest("5", false);
+
+        isLetterTest(" a ", false);
+        isLetterTest("abc", true);
+        isLetterTest("a1", false);
+    });
+
+    suite("isDigit(string)", () =>
+    {
+        function isDigitErrorTest(value: string | undefined | null, expectedError: Error): void
+        {
+            test(`with ${strings.escapeAndQuote(value)}`, () =>
+            {
+                assert.throws(() => strings.isDigit(value!), expectedError);
+            });
+        }
+
+        isDigitErrorTest(undefined, new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not undefined and not null",
+            "Actual: undefined",
+        ])));
+        isDigitErrorTest(null, new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not undefined and not null",
+            "Actual: null",
+        ])));
+        isDigitErrorTest("", new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not empty",
+            "Actual: \"\"",
+        ])));
+
+        function isDigitTest(value: string, expected: boolean): void
+        {
+            test(`with ${strings.escapeAndQuote(value)}`, () =>
+            {
+                assert.strictEqual(strings.isDigit(value), expected);
+            });
+        }
+        
+        isDigitTest("0", true);
+        isDigitTest("5", true);
+        isDigitTest("9", true);
+
+        isDigitTest(".", false);
+        isDigitTest("a", false);
+        isDigitTest("m", false);
+        isDigitTest("z", false);
+        isDigitTest("A", false);
+        isDigitTest("N", false);
+        isDigitTest("Z", false);
+        isDigitTest(" ", false);
+        isDigitTest("  ", false);
+        isDigitTest("\n", false);
+        isDigitTest("\r", false);
+        isDigitTest("\t", false);
+        isDigitTest("_", false);
+        isDigitTest("-", false);
+        isDigitTest(" a ", false);
+        isDigitTest("abc", false);
+        isDigitTest("a1", false);
+
+        isDigitTest("123", true);
+    });
+
+    suite("isLetterOrDigit(string)", () =>
+    {
+        function isLetterOrDigitErrorTest(value: string | undefined | null, expectedError: Error): void
+        {
+            test(`with ${strings.escapeAndQuote(value)}`, () =>
+            {
+                assert.throws(() => strings.isLetterOrDigit(value!), expectedError);
+            });
+        }
+
+        isLetterOrDigitErrorTest(undefined, new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not undefined and not null",
+            "Actual: undefined",
+        ])));
+        isLetterOrDigitErrorTest(null, new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not undefined and not null",
+            "Actual: null",
+        ])));
+        isLetterOrDigitErrorTest("", new PreConditionError(strings.join("\n", [
+            "Expression: value",
+            "Expected: not empty",
+            "Actual: \"\"",
+        ])));
+
+        function isLetterOrDigitTest(value: string, expected: boolean): void
+        {
+            test(`with ${strings.escapeAndQuote(value)}`, () =>
+            {
+                assert.strictEqual(strings.isLetterOrDigit(value), expected);
+            });
+        }
+        
+        isLetterOrDigitTest("0", true);
+        isLetterOrDigitTest("5", true);
+        isLetterOrDigitTest("9", true);
+        isLetterOrDigitTest("a", true);
+        isLetterOrDigitTest("m", true);
+        isLetterOrDigitTest("z", true);
+        isLetterOrDigitTest("A", true);
+        isLetterOrDigitTest("N", true);
+        isLetterOrDigitTest("Z", true);
+        isLetterOrDigitTest("abc", true);
+        isLetterOrDigitTest("a1", true);
+        isLetterOrDigitTest("123", true);
+
+        isLetterOrDigitTest(".", false);
+        isLetterOrDigitTest(" ", false);
+        isLetterOrDigitTest("  ", false);
+        isLetterOrDigitTest("\n", false);
+        isLetterOrDigitTest("\r", false);
+        isLetterOrDigitTest("\t", false);
+        isLetterOrDigitTest("_", false);
+        isLetterOrDigitTest("-", false);
+        isLetterOrDigitTest(" a ", false);
     });
 });

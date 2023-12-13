@@ -132,7 +132,7 @@ export function escapeAndQuote(value: string | undefined | null, quoteString?: s
  */
 export function isWhitespace(value: string): boolean
 {
-    Pre.condition.assertNotUndefinedAndNotNull(value, "value");
+    Pre.condition.assertNotEmpty(value, "value");
 
     let result: boolean = true;
     loop: for (let i = 0; i < value.length; i++)
@@ -158,36 +158,65 @@ export function isWhitespace(value: string): boolean
  * Get whether the provided value only contains letters.
  * @param value The value to check.
  */
-// export function isLetter(value: string): boolean
-// {
+export function isLetter(value: string): boolean
+{
+    Pre.condition.assertNotEmpty(value, "value");
 
-// }
+    let result: boolean = true;
+    for (let i = 0; i < value.length; i++)
+    {
+        const current: string = value[i];
+        if (!("a" <= current && current <= "z") &&
+            !("A" <= current && current <= "Z"))
+        {
+            result = false;
+            break;
+        }
+    }
+    
+    return result;
+}
 
 /**
- * Get whether the provided value only contains letters and numbers.
+ * Get whether the provided value only contains digits.
  * @param value The value to check.
  */
-export function isAlphanumeric(value: string): boolean
+export function isDigit(value: string): boolean
 {
-    Pre.condition.assertNotUndefinedAndNotNull(value, "value");
+    Pre.condition.assertNotEmpty(value, "value");
 
-    let result: boolean;
-    if (value.length === 0)
+    let result: boolean = true;
+    for (let i = 0; i < value.length; i++)
     {
-        result = false;
-    }
-    else
-    {
-        result = true;
-        for (let i = 0; i < value.length; i++)
+        const current: string = value[i];
+        if (!("0" <= current && current <= "9"))
         {
-            const currentCharacter: string = value[i];
-            if (("a" <= currentCharacter && currentCharacter <= "z") ||
-                ("A" <= currentCharacter && currentCharacter <= "Z") ||
-                ("0" <= currentCharacter && currentCharacter <= "9"))
-            {
-                
-            }
+            result = false;
+            break;
+        }
+    }
+    
+    return result;
+}
+
+/**
+ * Get whether the provided value only contains letters and digits.
+ * @param value The value to check.
+ */
+export function isLetterOrDigit(value: string): boolean
+{
+    Pre.condition.assertNotEmpty(value, "value");
+
+    let result: boolean = true;
+    for (let i = 0; i < value.length; i++)
+    {
+        const current: string = value[i];
+        if (!("a" <= current && current <= "z") &&
+            !("A" <= current && current <= "Z") &&
+            !("0" <= current && current <= "9"))
+        {
+            result = false;
+            break;
         }
     }
     
