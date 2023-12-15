@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/everyonesoftware/textmodifications-vscode-typescript"
   },
-  "version": "0.0.1",
+  "version": "2",
   "engines": {
     "vscode": "^1.84.0"
   },
@@ -28,6 +28,12 @@
       {
         "command": "textmodifications-vscode.toUppercase",
         "title": "To Uppercase",
+        "category": "Text Modifications",
+        "enablement": "editorHasSelection"
+      },
+      {
+        "command": "textmodifications-vscode.toCamelCase",
+        "title": "To Camel-case",
         "category": "Text Modifications",
         "enablement": "editorHasSelection"
       }
@@ -55,6 +61,9 @@
         },
         {
           "command": "textmodifications-vscode.toUppercase"
+        },
+        {
+          "command": "textmodifications-vscode.toCamelCase"
         }
       ],
       "editor/context": [

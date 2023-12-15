@@ -132,25 +132,23 @@ export function escapeAndQuote(value: string | undefined | null, quoteString?: s
  */
 export function isWhitespace(value: string): boolean
 {
-    Pre.condition.assertNotEmpty(value, "value");
+    Pre.condition.assertNotUndefinedAndNotNull(value, "value");
+    Pre.condition.assertSame(1, value.length, "value.length");
 
     let result: boolean = true;
-    loop: for (let i = 0; i < value.length; i++)
+    switch (value[0])
     {
-        switch (value[i])
-        {
-            case " ":
-            case "\r":
-            case "\n":
-            case "\t":
-                break;
+        case " ":
+        case "\r":
+        case "\n":
+        case "\t":
+            result = true;
+            break;
 
-            default:
-                result = false;
-                break loop;
-        }
+        default:
+            result = false;
+            break;
     }
-    
     return result;
 }
 
@@ -160,21 +158,33 @@ export function isWhitespace(value: string): boolean
  */
 export function isLetter(value: string): boolean
 {
-    Pre.condition.assertNotEmpty(value, "value");
+    return isLowercasedLetter(value) || isUppercasedLetter(value);
+}
 
-    let result: boolean = true;
-    for (let i = 0; i < value.length; i++)
-    {
-        const current: string = value[i];
-        if (!("a" <= current && current <= "z") &&
-            !("A" <= current && current <= "Z"))
-        {
-            result = false;
-            break;
-        }
-    }
-    
-    return result;
+/**
+ * Get whether the provided value only contains letters.
+ * @param value The value to check.
+ */
+export function isLowercasedLetter(value: string): boolean
+{
+    Pre.condition.assertNotUndefinedAndNotNull(value, "value");
+    Pre.condition.assertSame(1, value.length, "value.length");
+
+    const character: string = value[0];
+    return ("a" <= character && character <= "z");
+}
+
+/**
+ * Get whether the provided value only contains letters.
+ * @param value The value to check.
+ */
+export function isUppercasedLetter(value: string): boolean
+{
+    Pre.condition.assertNotUndefinedAndNotNull(value, "value");
+    Pre.condition.assertSame(1, value.length, "value.length");
+
+    const character: string = value[0];
+    return ("A" <= character && character <= "Z");
 }
 
 /**
@@ -183,20 +193,11 @@ export function isLetter(value: string): boolean
  */
 export function isDigit(value: string): boolean
 {
-    Pre.condition.assertNotEmpty(value, "value");
+    Pre.condition.assertNotUndefinedAndNotNull(value, "value");
+    Pre.condition.assertSame(1, value.length, "value.length");
 
-    let result: boolean = true;
-    for (let i = 0; i < value.length; i++)
-    {
-        const current: string = value[i];
-        if (!("0" <= current && current <= "9"))
-        {
-            result = false;
-            break;
-        }
-    }
-    
-    return result;
+    const character: string = value[0];
+    return ("0" <= character && character <= "9");
 }
 
 /**
@@ -205,20 +206,11 @@ export function isDigit(value: string): boolean
  */
 export function isLetterOrDigit(value: string): boolean
 {
-    Pre.condition.assertNotEmpty(value, "value");
+    Pre.condition.assertNotUndefinedAndNotNull(value, "value");
+    Pre.condition.assertSame(1, value.length, "value.length");
 
-    let result: boolean = true;
-    for (let i = 0; i < value.length; i++)
-    {
-        const current: string = value[i];
-        if (!("a" <= current && current <= "z") &&
-            !("A" <= current && current <= "Z") &&
-            !("0" <= current && current <= "9"))
-        {
-            result = false;
-            break;
-        }
-    }
-    
-    return result;
+    const character: string = value[0];
+    return ("a" <= character && character <= "z") ||
+           ("A" <= character && character <= "Z") ||
+           ("0" <= character && character <= "9");
 }

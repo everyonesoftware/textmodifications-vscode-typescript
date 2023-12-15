@@ -141,9 +141,14 @@ suite("strings", () =>
             "Actual: null",
         ])));
         isWhitespaceErrorTest("", new PreConditionError(strings.join("\n", [
-            "Expression: value",
-            "Expected: not empty",
-            "Actual: \"\"",
+            "Expression: value.length",
+            "Expected: 1",
+            "Actual: 0",
+        ])));
+        isWhitespaceErrorTest("  ", new PreConditionError(strings.join("\n", [
+            "Expression: value.length",
+            "Expected: 1",
+            "Actual: 2",
         ])));
 
         function isWhitespaceTest(value: string, expected: boolean): void
@@ -155,7 +160,6 @@ suite("strings", () =>
         }
 
         isWhitespaceTest(" ", true);
-        isWhitespaceTest("  ", true);
         isWhitespaceTest("\n", true);
         isWhitespaceTest("\r", true);
         isWhitespaceTest("\t", true);
@@ -163,7 +167,6 @@ suite("strings", () =>
         isWhitespaceTest("a", false);
         isWhitespaceTest("_", false);
         isWhitespaceTest("-", false);
-        isWhitespaceTest(" f", false);
     });
 
     suite("isLetter(string)", () =>
@@ -187,9 +190,14 @@ suite("strings", () =>
             "Actual: null",
         ])));
         isLetterErrorTest("", new PreConditionError(strings.join("\n", [
-            "Expression: value",
-            "Expected: not empty",
-            "Actual: \"\"",
+            "Expression: value.length",
+            "Expected: 1",
+            "Actual: 0",
+        ])));
+        isLetterErrorTest("  ", new PreConditionError(strings.join("\n", [
+            "Expression: value.length",
+            "Expected: 1",
+            "Actual: 2",
         ])));
 
         function isLetterTest(value: string, expected: boolean): void
@@ -208,17 +216,12 @@ suite("strings", () =>
         isLetterTest("Z", true);
         
         isLetterTest(" ", false);
-        isLetterTest("  ", false);
         isLetterTest("\n", false);
         isLetterTest("\r", false);
         isLetterTest("\t", false);
         isLetterTest("_", false);
         isLetterTest("-", false);
         isLetterTest("5", false);
-
-        isLetterTest(" a ", false);
-        isLetterTest("abc", true);
-        isLetterTest("a1", false);
     });
 
     suite("isDigit(string)", () =>
@@ -242,9 +245,14 @@ suite("strings", () =>
             "Actual: null",
         ])));
         isDigitErrorTest("", new PreConditionError(strings.join("\n", [
-            "Expression: value",
-            "Expected: not empty",
-            "Actual: \"\"",
+            "Expression: value.length",
+            "Expected: 1",
+            "Actual: 0",
+        ])));
+        isDigitErrorTest("  ", new PreConditionError(strings.join("\n", [
+            "Expression: value.length",
+            "Expected: 1",
+            "Actual: 2",
         ])));
 
         function isDigitTest(value: string, expected: boolean): void
@@ -267,17 +275,11 @@ suite("strings", () =>
         isDigitTest("N", false);
         isDigitTest("Z", false);
         isDigitTest(" ", false);
-        isDigitTest("  ", false);
         isDigitTest("\n", false);
         isDigitTest("\r", false);
         isDigitTest("\t", false);
         isDigitTest("_", false);
         isDigitTest("-", false);
-        isDigitTest(" a ", false);
-        isDigitTest("abc", false);
-        isDigitTest("a1", false);
-
-        isDigitTest("123", true);
     });
 
     suite("isLetterOrDigit(string)", () =>
@@ -301,9 +303,14 @@ suite("strings", () =>
             "Actual: null",
         ])));
         isLetterOrDigitErrorTest("", new PreConditionError(strings.join("\n", [
-            "Expression: value",
-            "Expected: not empty",
-            "Actual: \"\"",
+            "Expression: value.length",
+            "Expected: 1",
+            "Actual: 0",
+        ])));
+        isLetterOrDigitErrorTest("ab", new PreConditionError(strings.join("\n", [
+            "Expression: value.length",
+            "Expected: 1",
+            "Actual: 2",
         ])));
 
         function isLetterOrDigitTest(value: string, expected: boolean): void
@@ -323,18 +330,13 @@ suite("strings", () =>
         isLetterOrDigitTest("A", true);
         isLetterOrDigitTest("N", true);
         isLetterOrDigitTest("Z", true);
-        isLetterOrDigitTest("abc", true);
-        isLetterOrDigitTest("a1", true);
-        isLetterOrDigitTest("123", true);
 
         isLetterOrDigitTest(".", false);
         isLetterOrDigitTest(" ", false);
-        isLetterOrDigitTest("  ", false);
         isLetterOrDigitTest("\n", false);
         isLetterOrDigitTest("\r", false);
         isLetterOrDigitTest("\t", false);
         isLetterOrDigitTest("_", false);
         isLetterOrDigitTest("-", false);
-        isLetterOrDigitTest(" a ", false);
     });
 });

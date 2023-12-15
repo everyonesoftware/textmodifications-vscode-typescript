@@ -136,6 +136,46 @@ export class Condition
         }
     }
 
+    /**
+     * Assert that the provided actual value is the same as the provided expected value.
+     * @param expected The expected value.
+     * @param actual The actual value.
+     * @param expression The expression that produced the actual value.
+     * @param message An optional message that describes the scenario.
+     */
+    public assertSame<T>(expected: T, actual: T, expression?: string, message?: string): void
+    {
+        if (expected !== actual)
+        {
+            throw this.createError({
+                expected: JSON.stringify(expected),
+                actual: JSON.stringify(actual),
+                expression: expression,
+                message: message,
+            });
+        }
+    }
+
+    /**
+     * Assert that the provided actual value is not the same as the provided expected value.
+     * @param expected The expected value.
+     * @param actual The actual value.
+     * @param expression The expression that produced the actual value.
+     * @param message An optional message that describes the scenario.
+     */
+    public assertNotSame<T>(expected: T, actual: T, expression?: string, message?: string): void
+    {
+        if (expected === actual)
+        {
+            throw this.createError({
+                expected: `not ${JSON.stringify(expected)}`,
+                actual: JSON.stringify(actual),
+                expression: expression,
+                message: message,
+            });
+        }
+    }
+
     public assertNotEmpty(value: string, expression?: string, message?: string): asserts value is string
     {
         this.assertNotUndefinedAndNotNull(value, expression, message);

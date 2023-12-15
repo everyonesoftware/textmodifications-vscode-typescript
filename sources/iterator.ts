@@ -38,6 +38,20 @@ export abstract class Iterator<T>
         }
         return this;
     }
+
+    /**
+     * Get the current value from this {@link Iterator} and advance this {@link Iterator} to the
+     * next value.
+     */
+    public takeCurrent(): T
+    {
+        Pre.condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
+
+        const result: T = this.getCurrent();
+        this.next();
+
+        return result;
+    }
 }
 
 /**

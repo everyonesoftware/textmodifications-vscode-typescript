@@ -148,6 +148,197 @@ suite(Condition.name, () =>
         });
     });
 
+    suite("assertSame<T>(T,T,string?,string?)", () =>
+    {
+        function assertSameTest<T>(expected: T, actual: T, expression: string | undefined, message: string | undefined, expectedError?: Error): void
+        {
+            test(`with ${andList([expected, actual, expression, message].map(x => JSON.stringify(x)))}`, () =>
+            {
+                const condition: Condition = Condition.create();
+                if (expectedError)
+                {
+                    assert.throws(() => condition.assertSame(expected, actual, expression, message), expectedError);
+                }
+                else
+                {
+                    condition.assertSame(expected, actual, expression, message);
+                }
+            });
+        }
+
+        assertSameTest(undefined, undefined, "fake-expression", "fake-message");
+        assertSameTest(null, null, "fake-expression", "fake-message");
+        assertSameTest(0, 0, "fake-expression", "fake-message");
+        assertSameTest(10, 10, "fake-expression", "fake-message");
+        assertSameTest(true, true, "fake-expression", "fake-message");
+        assertSameTest("abc", "abc", "fake-expression", "fake-message");
+        
+        const o = {};
+        assertSameTest(o, o, "fake-expression", "fake-message");
+
+        assertSameTest(
+            undefined,
+            null,
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: undefined",
+                "Actual: null",
+            ])));
+        assertSameTest(
+            3,
+            4,
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: 3",
+                "Actual: 4",
+            ])));
+        assertSameTest(
+            {},
+            {},
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: {}",
+                "Actual: {}",
+            ])));
+        assertSameTest(
+            { "a": "b" },
+            { "a": "b" },
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: {\"a\":\"b\"}",
+                "Actual: {\"a\":\"b\"}",
+            ])));
+        assertSameTest(
+            [],
+            [],
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: []",
+                "Actual: []",
+            ])));
+    });
+
+    suite("assertNotSame<T>(T,T,string?,string?)", () =>
+    {
+        function assertNotSameTest<T>(expected: T, actual: T, expression: string | undefined, message: string | undefined, expectedError?: Error): void
+        {
+            test(`with ${andList([expected, actual, expression, message].map(x => JSON.stringify(x)))}`, () =>
+            {
+                const condition: Condition = Condition.create();
+                if (expectedError)
+                {
+                    assert.throws(() => condition.assertNotSame(expected, actual, expression, message), expectedError);
+                }
+                else
+                {
+                    condition.assertNotSame(expected, actual, expression, message);
+                }
+            });
+        }
+
+        assertNotSameTest(
+            undefined,
+            undefined,
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: not undefined",
+                "Actual: undefined",
+            ])));
+        assertNotSameTest(
+            null,
+            null,
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: not null",
+                "Actual: null",
+            ])));
+        assertNotSameTest(
+            0,
+            0,
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: not 0",
+                "Actual: 0",
+            ])));
+        assertNotSameTest(
+            10,
+            10,
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: not 10",
+                "Actual: 10",
+            ])));
+        assertNotSameTest(
+            true,
+            true,
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: not true",
+                "Actual: true",
+            ])));
+        assertNotSameTest(
+            "abc",
+            "abc",
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: not \"abc\"",
+                "Actual: \"abc\"",
+            ])));
+        
+        const o = {};
+        assertNotSameTest(
+            o,
+            o,
+            "fake-expression",
+            "fake-message",
+            new Error(join("\n", [
+                "Message: fake-message",
+                "Expression: fake-expression",
+                "Expected: not {}",
+                "Actual: {}",
+            ])));
+
+        assertNotSameTest(undefined, null, "fake-expression", "fake-message");
+        assertNotSameTest(false, true, "fake-expression", "fake-message");
+        assertNotSameTest(1, 2, "fake-expression", "fake-message");
+        assertNotSameTest({}, {}, "fake-expression", "fake-message");
+        assertNotSameTest({ "a": "b" }, { "a": "b" }, "fake-expression", "fake-message");
+        assertNotSameTest([], [], "fake-expression", "fake-message");
+    });
+
     suite("assertNotEmpty(string,string?,string?)", () =>
     {
         function assertNotEmptyTest(value: string, expression: string | undefined, message: string | undefined, expectedError?: Error): void

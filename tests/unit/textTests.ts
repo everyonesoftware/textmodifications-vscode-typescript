@@ -50,5 +50,21 @@ suite("text.ts", () =>
         toCamelCaseTest("abc def", "abcDef");
         toCamelCaseTest("abc def ghi", "abcDefGhi");
         toCamelCaseTest("abc DEF ghi", "abcDEFGhi");
+        toCamelCaseTest("  This is a test  ", "  thisIsATest");
+        toCamelCaseTest("HTTP", "http");
+        toCamelCaseTest("HTTP Client", "httpClient");
+        toCamelCaseTest("HTTPClient", "httpclient");
+        toCamelCaseTest("httpClient", "httpClient");
+        toCamelCaseTest("My HTTP Client", "myHTTPClient");
+        toCamelCaseTest("myHTTPClient", "myHTTPClient");
+        toCamelCaseTest("First Sentence. Second Sentence", "firstSentence. secondSentence");
+        toCamelCaseTest("I Am Trying", "iAmTrying");
+        toCamelCaseTest("abcDef ghiJkl", "abcDefGhiJkl");
+        toCamelCaseTest("lee7 c0d3", "lee7C0d3")
+        toCamelCaseTest("simple3test", "simple3test");
+        toCamelCaseTest("a-kebab-case-example", "aKebabCaseExample");
+        toCamelCaseTest("a_snake_case_example", "aSnakeCaseExample");
+        toCamelCaseTest("APascalCaseExample", "apascalCaseExample");
+        toCamelCaseTest("AnotherPascalCaseExample", "anotherPascalCaseExample");
     });
 });

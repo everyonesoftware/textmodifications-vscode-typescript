@@ -1,5 +1,6 @@
 import { Pre } from "./condition";
-// import { StringIterator } from "./iterator";
+import { StringIterator } from "./iterator";
+import { isLetterOrDigit, isLowercasedLetter, isWhitespace } from "./strings";
 
 /**
  * Get the provided text where all letters have been converted to uppercase.
@@ -32,15 +33,53 @@ export function toCamelCase(text: string): string
 {
     Pre.condition.assertNotUndefinedAndNotNull(text, "text");
 
-    // let result: string = "";
+    let result: string = "";
 
-    // const iterator: StringIterator = StringIterator.create(text).start();
-    // let wordStartIndex: number | undefined = undefined;
-    // while (iterator.hasCurrent())
-    // {
-    //     const currentCharacter: string = iterator.getCurrent();
-    //     if (strings)
-    //     if (iterator.getCurrent().)
-    // }
-    return text;
+    const iterator: StringIterator = StringIterator.create(text).start();
+    let insideWordSequence: boolean = false;
+    let capitalize: boolean | undefined = false;
+    while (iterator.hasCurrent())
+    {
+        const current: string = iterator.takeCurrent();
+        if (isLetterOrDigit(current))
+        {
+            if (capitalize === undefined)
+            {
+                result += current;
+            }
+            else if (capitalize === false)
+            {
+                result += toLowercase(current);
+                if (isLowercasedLetter(current))
+                {
+                    capitalize = undefined;
+                }
+            }
+            else
+            {
+                result += toUppercase(current);
+                capitalize = undefined;
+            }
+
+            insideWordSequence = true;
+        }
+        else if (isWhitespace(current) || current === "-" || current === "_")
+        {
+            if (insideWordSequence)
+            {
+                capitalize = true;
+            }
+            else
+            {
+                result += current;
+            }
+        }
+        else
+        {
+            insideWordSequence = false;
+            capitalize = false;
+            result += current;
+        }
+    }
+    return result;
 }
