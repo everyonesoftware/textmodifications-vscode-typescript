@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/everyonesoftware/textmodifications-vscode-typescript"
   },
-  "version": "2",
+  "version": "2.0.0",
   "engines": {
     "vscode": "^1.84.0"
   },
