@@ -25,6 +25,33 @@ export abstract class Iterator<T>
      * Get the value that this {@link Iterator} points to.
      */
     public abstract getCurrent(): T;
+
+    /**
+     * Move to the first value if this {@link Iterator} hasn't started yet.
+     * @returns This object for method chaining.
+     */
+    public start(): this
+    {
+        if (!this.hasStarted())
+        {
+            this.next();
+        }
+        return this;
+    }
+
+    /**
+     * Get the current value from this {@link Iterator} and advance this {@link Iterator} to the
+     * next value.
+     */
+    public takeCurrent(): T
+    {
+        Pre.condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
+
+        const result: T = this.getCurrent();
+        this.next();
+
+        return result;
+    }
 }
 
 /**
@@ -59,14 +86,14 @@ export class StringIterator extends IndexableIterator<string>
 
     public static create(value: string): StringIterator
     {
-        Pre.Condition.assertNotUndefinedAndNotNull(value, "value");
+        Pre.condition.assertNotUndefinedAndNotNull(value, "value");
 
         return new StringIterator(value);
     }
 
     public override getCurrentIndex(): number
     {
-        Pre.Condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
+        Pre.condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
 
         return this.currentIndex;
     }
@@ -96,7 +123,7 @@ export class StringIterator extends IndexableIterator<string>
 
     public override getCurrent(): string
     {
-        Pre.Condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
+        Pre.condition.assertTrue(this.hasCurrent(), "this.hasCurrent()");
 
         return this.value[this.currentIndex];
     }
