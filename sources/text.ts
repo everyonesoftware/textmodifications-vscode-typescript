@@ -83,3 +83,50 @@ export function toCamelCase(text: string): string
     }
     return result;
 }
+
+export function toPascalCase(text: string): string
+{
+    Pre.condition.assertNotUndefinedAndNotNull(text, "text");
+
+    let result: string = "";
+
+    const iterator: StringIterator = StringIterator.create(text).start();
+    let insideWordSequence: boolean = false;
+    let capitalize: boolean | undefined = true;
+    while (iterator.hasCurrent())
+    {
+        const current: string = iterator.takeCurrent();
+        if (isLetterOrDigit(current))
+        {
+            if (capitalize === undefined)
+            {
+                result += current;
+            }
+            else
+            {
+                result += toUppercase(current);
+                capitalize = undefined;
+            }
+
+            insideWordSequence = true;
+        }
+        else if (isWhitespace(current) || current === "-" || current === "_")
+        {
+            if (insideWordSequence)
+            {
+                capitalize = true;
+            }
+            else
+            {
+                result += current;
+            }
+        }
+        else
+        {
+            insideWordSequence = false;
+            capitalize = true;
+            result += current;
+        }
+    }
+    return result;
+}

@@ -43,7 +43,7 @@ suite("Integration Tests", () => {
         }
     });
 
-    test("execute ToLowerCase when a selection exists", async () =>
+    test("execute toLowerCase when a selection exists", async () =>
     {
         await vscode.commands.executeCommand("vscode.openWith", vscode.Uri.parse("untitled:NewDocument"), "default");
         const activeTab: vscode.Tab | undefined = vscode.window.tabGroups.activeTabGroup.activeTab;
@@ -70,7 +70,7 @@ suite("Integration Tests", () => {
         }
     });
 
-    test("execute ToUpperCase when a selection exists", async () =>
+    test("execute toUpperCase when a selection exists", async () =>
     {
         await vscode.commands.executeCommand("vscode.openWith", vscode.Uri.parse("untitled:NewDocument"), "default");
         const activeTab: vscode.Tab | undefined = vscode.window.tabGroups.activeTabGroup.activeTab;
@@ -90,6 +90,60 @@ suite("Integration Tests", () => {
             assert.strictEqual(executeCommandResult, undefined);
 
             assert.strictEqual(textEditor!.document.getText(), "HeLLO WORld!");
+        }
+        finally
+        {
+            vscode.window.tabGroups.close(activeTab!);
+        }
+    });
+
+    test("execute toCamelCase when a selection exists", async () =>
+    {
+        await vscode.commands.executeCommand("vscode.openWith", vscode.Uri.parse("untitled:NewDocument"), "default");
+        const activeTab: vscode.Tab | undefined = vscode.window.tabGroups.activeTabGroup.activeTab;
+        assert.notStrictEqual(activeTab, undefined);
+        try
+        {
+            const textEditor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
+            assert.notStrictEqual(textEditor, undefined);
+            await textEditor!.edit((editBuilder: vscode.TextEditorEdit) =>
+            {
+                editBuilder.insert(new vscode.Position(0, 0), "Hello world!");
+            });
+
+            textEditor!.selection = new vscode.Selection(0, 2, 0, 9);
+
+            const executeCommandResult: unknown = await vscode.commands.executeCommand(extension.toCamelCaseCommandId);
+            assert.strictEqual(executeCommandResult, undefined);
+
+            assert.strictEqual(textEditor!.document.getText(), "HelloWorld!");
+        }
+        finally
+        {
+            vscode.window.tabGroups.close(activeTab!);
+        }
+    });
+
+    test("execute toPascalCase when a selection exists", async () =>
+    {
+        await vscode.commands.executeCommand("vscode.openWith", vscode.Uri.parse("untitled:NewDocument"), "default");
+        const activeTab: vscode.Tab | undefined = vscode.window.tabGroups.activeTabGroup.activeTab;
+        assert.notStrictEqual(activeTab, undefined);
+        try
+        {
+            const textEditor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
+            assert.notStrictEqual(textEditor, undefined);
+            await textEditor!.edit((editBuilder: vscode.TextEditorEdit) =>
+            {
+                editBuilder.insert(new vscode.Position(0, 0), "Hello world!");
+            });
+
+            textEditor!.selection = new vscode.Selection(0, 2, 0, 9);
+
+            const executeCommandResult: unknown = await vscode.commands.executeCommand(extension.toPascalCaseCommandId);
+            assert.strictEqual(executeCommandResult, undefined);
+
+            assert.strictEqual(textEditor!.document.getText(), "HeLloWorld!");
         }
         finally
         {

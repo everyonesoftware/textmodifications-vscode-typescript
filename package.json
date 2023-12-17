@@ -21,19 +21,25 @@
     "commands": [
       {
         "command": "textmodifications-vscode.toLowercase",
-        "title": "To Lowercase",
+        "title": "To lowercase",
         "category": "Text Modifications",
         "enablement": "editorHasSelection"
       },
       {
         "command": "textmodifications-vscode.toUppercase",
-        "title": "To Uppercase",
+        "title": "To UPPERCASE",
         "category": "Text Modifications",
         "enablement": "editorHasSelection"
       },
       {
         "command": "textmodifications-vscode.toCamelCase",
-        "title": "To Camel-case",
+        "title": "To camelCase",
+        "category": "Text Modifications",
+        "enablement": "editorHasSelection"
+      },
+      {
+        "command": "textmodifications-vscode.toPascalCase",
+        "title": "To PascalCase",
         "category": "Text Modifications",
         "enablement": "editorHasSelection"
       }
@@ -64,6 +70,9 @@
         },
         {
           "command": "textmodifications-vscode.toCamelCase"
+        },
+        {
+          "command": "textmodifications-vscode.toPascalCase"
         }
       ],
       "editor/context": [
