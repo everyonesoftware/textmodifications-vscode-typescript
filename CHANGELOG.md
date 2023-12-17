@@ -1,5 +1,9 @@
 # Change Log
 
+## 5.0.0
+
+- Add Kebab case and Upper Kebab case
+
 ## 4.0.0
 
 - Add Snake case and Upper Snake case
