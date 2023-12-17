@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/everyonesoftware/textmodifications-vscode-typescript"
   },
-  "version": "3.0.0",
+  "version": "4.0.0",
   "engines": {
     "vscode": "^1.84.0"
   },
@@ -42,6 +42,18 @@
         "title": "To PascalCase",
         "category": "Text Modifications",
         "enablement": "editorHasSelection"
+      },
+      {
+        "command": "textmodifications-vscode.toSnakeCase",
+        "title": "To snake_case",
+        "category": "Text Modifications",
+        "enablement": "editorHasSelection"
+      },
+      {
+        "command": "textmodifications-vscode.toUpperSnakeCase",
+        "title": "To UPPER_SNAKE_CASE",
+        "category": "Text Modifications",
+        "enablement": "editorHasSelection"
       }
     ],
     "keybindings":[
@@ -73,6 +85,12 @@
         },
         {
           "command": "textmodifications-vscode.toPascalCase"
+        },
+        {
+          "command": "textmodifications-vscode.toSnakeCase"
+        },
+        {
+          "command": "textmodifications-vscode.toUpperSnakeCase"
         }
       ],
       "editor/context": [

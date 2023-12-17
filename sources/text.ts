@@ -38,11 +38,13 @@ export function toCamelCase(text: string): string
     const iterator: StringIterator = StringIterator.create(text).start();
     let insideWordSequence: boolean = false;
     let capitalize: boolean | undefined = false;
+    let whitespaceBuffer: string = "";
     while (iterator.hasCurrent())
     {
         const current: string = iterator.takeCurrent();
         if (isLetterOrDigit(current))
         {
+            whitespaceBuffer = "";
             if (capitalize === undefined)
             {
                 result += current;
@@ -67,6 +69,7 @@ export function toCamelCase(text: string): string
         {
             if (insideWordSequence)
             {
+                whitespaceBuffer += current;
                 capitalize = true;
             }
             else
@@ -76,11 +79,23 @@ export function toCamelCase(text: string): string
         }
         else
         {
+            if (whitespaceBuffer !== "")
+            {
+                result += whitespaceBuffer;
+                whitespaceBuffer = "";
+            }
             insideWordSequence = false;
             capitalize = false;
             result += current;
         }
     }
+
+    if (whitespaceBuffer !== "")
+    {
+        result += whitespaceBuffer;
+        whitespaceBuffer = "";
+    }
+
     return result;
 }
 
@@ -93,11 +108,14 @@ export function toPascalCase(text: string): string
     const iterator: StringIterator = StringIterator.create(text).start();
     let insideWordSequence: boolean = false;
     let capitalize: boolean | undefined = true;
+    let whitespaceBuffer: string = "";
     while (iterator.hasCurrent())
     {
         const current: string = iterator.takeCurrent();
         if (isLetterOrDigit(current))
         {
+            whitespaceBuffer = "";
+
             if (capitalize === undefined)
             {
                 result += current;
@@ -114,6 +132,7 @@ export function toPascalCase(text: string): string
         {
             if (insideWordSequence)
             {
+                whitespaceBuffer += current;
                 capitalize = true;
             }
             else
@@ -123,10 +142,132 @@ export function toPascalCase(text: string): string
         }
         else
         {
+            if (whitespaceBuffer !== "")
+            {
+                result += whitespaceBuffer;
+                whitespaceBuffer = "";
+            }
             insideWordSequence = false;
             capitalize = true;
             result += current;
         }
     }
+
+    if (whitespaceBuffer !== "")
+    {
+        result += whitespaceBuffer;
+        whitespaceBuffer = "";
+    }
+
+    return result;
+}
+
+export function toSnakeCase(text: string): string
+{
+    Pre.condition.assertNotUndefinedAndNotNull(text, "text");
+
+    let result: string = "";
+
+    const iterator: StringIterator = StringIterator.create(text).start();
+    let insideWordSequence: boolean = false;
+    let whitespaceBuffer: string = "";
+    while (iterator.hasCurrent())
+    {
+        const current: string = iterator.takeCurrent();
+        if (isLetterOrDigit(current))
+        {
+            if (whitespaceBuffer !== "")
+            {
+                result += "_";
+                whitespaceBuffer = "";
+            }
+            result += toLowercase(current);
+
+            insideWordSequence = true;
+        }
+        else if (isWhitespace(current) || current === "-" || current === "_")
+        {
+            if (insideWordSequence)
+            {
+                whitespaceBuffer += current;
+            }
+            else
+            {
+                result += current;
+            }
+        }
+        else
+        {
+            if (whitespaceBuffer !== "")
+            {
+                result += whitespaceBuffer;
+                whitespaceBuffer = "";
+            }
+            insideWordSequence = false;
+            result += current;
+        }
+    }
+
+    if (whitespaceBuffer !== "")
+    {
+        result += whitespaceBuffer;
+        whitespaceBuffer = "";
+    }
+
+    return result;
+}
+
+export function toUpperSnakeCase(text: string): string
+{
+    Pre.condition.assertNotUndefinedAndNotNull(text, "text");
+
+    let result: string = "";
+
+    const iterator: StringIterator = StringIterator.create(text).start();
+    let insideWordSequence: boolean = false;
+    let whitespaceBuffer: string = "";
+    while (iterator.hasCurrent())
+    {
+        const current: string = iterator.takeCurrent();
+        if (isLetterOrDigit(current))
+        {
+            if (whitespaceBuffer !== "")
+            {
+                result += "_";
+                whitespaceBuffer = "";
+            }
+            result += toUppercase(current);
+
+            insideWordSequence = true;
+        }
+        else if (isWhitespace(current) || current === "-" || current === "_")
+        {
+            if (insideWordSequence)
+            {
+                whitespaceBuffer += current;
+            }
+            else
+            {
+                result += current;
+            }
+        }
+        else
+        {
+            if (whitespaceBuffer !== "")
+            {
+                result += whitespaceBuffer;
+                whitespaceBuffer = "";
+            }
+            insideWordSequence = false;
+            result += current;
+        }
+    }
+
+    if (whitespaceBuffer !== "")
+    {
+        result += whitespaceBuffer;
+        whitespaceBuffer = "";
+    }
+
     return result;
 }

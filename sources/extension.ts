@@ -6,6 +6,8 @@ export const toLowercaseCommandId: string = "textmodifications-vscode.toLowercas
 export const toUppercaseCommandId: string = "textmodifications-vscode.toUppercase";
 export const toCamelCaseCommandId: string = "textmodifications-vscode.toCamelCase";
 export const toPascalCaseCommandId: string = "textmodifications-vscode.toPascalCase";
+export const toSnakeCaseCommandId: string = "textmodifications-vscode.toSnakeCase";
+export const toUpperSnakeCaseCommandId: string = "textmodifications-vscode.toUpperSnakeCase";
 
 export function activate(context: vscode.ExtensionContext): void
 {
@@ -43,6 +45,14 @@ export function activate(context: vscode.ExtensionContext): void
         vscode.commands.registerCommand(toPascalCaseCommandId, () =>
         {
             return applyModificationToSelection(text.toPascalCase);
+        }),
+        vscode.commands.registerCommand(toSnakeCaseCommandId, () =>
+        {
+            return applyModificationToSelection(text.toSnakeCase);
+        }),
+        vscode.commands.registerCommand(toUpperSnakeCaseCommandId, () =>
+        {
+            return applyModificationToSelection(text.toUpperSnakeCase);
         }));
 }
 

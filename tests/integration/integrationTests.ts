@@ -150,4 +150,58 @@ suite("Integration Tests", () => {
             vscode.window.tabGroups.close(activeTab!);
         }
     });
+
+    test("execute toSnakeCase when a selection exists", async () =>
+    {
+        await vscode.commands.executeCommand("vscode.openWith", vscode.Uri.parse("untitled:NewDocument"), "default");
+        const activeTab: vscode.Tab | undefined = vscode.window.tabGroups.activeTabGroup.activeTab;
+        assert.notStrictEqual(activeTab, undefined);
+        try
+        {
+            const textEditor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
+            assert.notStrictEqual(textEditor, undefined);
+            await textEditor!.edit((editBuilder: vscode.TextEditorEdit) =>
+            {
+                editBuilder.insert(new vscode.Position(0, 0), "Hello world!");
+            });
+
+            textEditor!.selection = new vscode.Selection(0, 2, 0, 9);
+
+            const executeCommandResult: unknown = await vscode.commands.executeCommand(extension.toSnakeCaseCommandId);
+            assert.strictEqual(executeCommandResult, undefined);
+
+            assert.strictEqual(textEditor!.document.getText(), "Hello_world!");
+        }
+        finally
+        {
+            vscode.window.tabGroups.close(activeTab!);
+        }
+    });
+
+    test("execute toUpperSnakeCase when a selection exists", async () =>
+    {
+        await vscode.commands.executeCommand("vscode.openWith", vscode.Uri.parse("untitled:NewDocument"), "default");
+        const activeTab: vscode.Tab | undefined = vscode.window.tabGroups.activeTabGroup.activeTab;
+        assert.notStrictEqual(activeTab, undefined);
+        try
+        {
+            const textEditor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
+            assert.notStrictEqual(textEditor, undefined);
+            await textEditor!.edit((editBuilder: vscode.TextEditorEdit) =>
+            {
+                editBuilder.insert(new vscode.Position(0, 0), "Hello world!");
+            });
+
+            textEditor!.selection = new vscode.Selection(0, 2, 0, 9);
+
+            const executeCommandResult: unknown = await vscode.commands.executeCommand(extension.toUpperSnakeCaseCommandId);
+            assert.strictEqual(executeCommandResult, undefined);
+
+            assert.strictEqual(textEditor!.document.getText(), "HeLLO_WORld!");
+        }
+        finally
+        {
+            vscode.window.tabGroups.close(activeTab!);
+        }
+    });
 });
