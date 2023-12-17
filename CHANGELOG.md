@@ -1,9 +1,17 @@
 # Change Log
 
-All notable changes to the "vscodeextension-base" extension will be documented in this file.
+## 4.0.0
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+- Add Snake case and Upper Snake case
 
-## [Unreleased]
+## 3.0.0
+
+- Add Pascal case
+
+## 2.0.0
+
+- Add Camel case
+
+## 0.0.1
 
 - Initial release
