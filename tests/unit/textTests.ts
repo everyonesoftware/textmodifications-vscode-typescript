@@ -176,3 +176,77 @@ suite("toUpperSnakeCase(string)", () =>
     toUpperSnakeCaseTest("APascalCaseExample", "APASCALCASEEXAMPLE");
     toUpperSnakeCaseTest("AnotherPascalCaseExample", "ANOTHERPASCALCASEEXAMPLE");
 });
+
+
+
+suite("toKebabCase(string)", () =>
+{
+    function toKebabCaseTest(value: string, expected: string): void
+    {
+        test(`with "${value}"`, () =>
+        {
+            assert.strictEqual(text.toKebabCase(value), expected);
+        });
+    }
+
+    toKebabCaseTest("", "");
+    toKebabCaseTest("abc", "abc");
+    toKebabCaseTest("abcDef", "abcdef");
+    toKebabCaseTest("abc def", "abc-def");
+    toKebabCaseTest("abc def ghi", "abc-def-ghi");
+    toKebabCaseTest("abc DEF ghi", "abc-def-ghi");
+    toKebabCaseTest("  This is a test  ", "  this-is-a-test  ");
+    toKebabCaseTest("  This   is  another   test  ", "  this-is-another-test  ");
+    toKebabCaseTest("HTTP", "http");
+    toKebabCaseTest("HTTP Client", "http-client");
+    toKebabCaseTest("HTTPClient", "httpclient");
+    toKebabCaseTest("httpClient", "httpclient");
+    toKebabCaseTest("My HTTP Client", "my-http-client");
+    toKebabCaseTest("myHTTPClient", "myhttpclient");
+    toKebabCaseTest("First Sentence. Second Sentence", "first-sentence. second-sentence");
+    toKebabCaseTest("a b . . . c d", "a-b . . . c-d");
+    toKebabCaseTest("I Am Trying", "i-am-trying");
+    toKebabCaseTest("abcDef ghiJkl", "abcdef-ghijkl");
+    toKebabCaseTest("lee7 c0d3", "lee7-c0d3")
+    toKebabCaseTest("simple3test", "simple3test");
+    toKebabCaseTest("a-kebab-case-example", "a-kebab-case-example");
+    toKebabCaseTest("a_snake_case_example", "a-snake-case-example");
+    toKebabCaseTest("APascalCaseExample", "apascalcaseexample");
+    toKebabCaseTest("AnotherPascalCaseExample", "anotherpascalcaseexample");
+});
+
+suite("toUpperSnakeCase(string)", () =>
+{
+    function toUpperKebabCaseTest(value: string, expected: string): void
+    {
+        test(`with "${value}"`, () =>
+        {
+            assert.strictEqual(text.toUpperKebabCase(value), expected);
+        });
+    }
+
+    toUpperKebabCaseTest("", "");
+    toUpperKebabCaseTest("abc", "ABC");
+    toUpperKebabCaseTest("abcDef", "ABCDEF");
+    toUpperKebabCaseTest("abc def", "ABC-DEF");
+    toUpperKebabCaseTest("abc def ghi", "ABC-DEF-GHI");
+    toUpperKebabCaseTest("abc DEF ghi", "ABC-DEF-GHI");
+    toUpperKebabCaseTest("  This is a test  ", "  THIS-IS-A-TEST  ");
+    toUpperKebabCaseTest("  This   is  another   test  ", "  THIS-IS-ANOTHER-TEST  ");
+    toUpperKebabCaseTest("HTTP", "HTTP");
+    toUpperKebabCaseTest("HTTP Client", "HTTP-CLIENT");
+    toUpperKebabCaseTest("HTTPClient", "HTTPCLIENT");
+    toUpperKebabCaseTest("httpClient", "HTTPCLIENT");
+    toUpperKebabCaseTest("My HTTP Client", "MY-HTTP-CLIENT");
+    toUpperKebabCaseTest("myHTTPClient", "MYHTTPCLIENT");
+    toUpperKebabCaseTest("First Sentence. Second Sentence", "FIRST-SENTENCE. SECOND-SENTENCE");
+    toUpperKebabCaseTest("a b . . . c d", "A-B . . . C-D");
+    toUpperKebabCaseTest("I Am Trying", "I-AM-TRYING");
+    toUpperKebabCaseTest("abcDef ghiJkl", "ABCDEF-GHIJKL");
+    toUpperKebabCaseTest("lee7 c0d3", "LEE7-C0D3")
+    toUpperKebabCaseTest("simple3test", "SIMPLE3TEST");
+    toUpperKebabCaseTest("a-kebab-case-example", "A-KEBAB-CASE-EXAMPLE");
+    toUpperKebabCaseTest("a_snake_case_example", "A-SNAKE-CASE-EXAMPLE");
+    toUpperKebabCaseTest("APascalCaseExample", "APASCALCASEEXAMPLE");
+    toUpperKebabCaseTest("AnotherPascalCaseExample", "ANOTHERPASCALCASEEXAMPLE");
+});

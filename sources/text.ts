@@ -271,3 +271,113 @@ export function toUpperSnakeCase(text: string): string
 
     return result;
 }
+
+export function toKebabCase(text: string): string
+{
+    Pre.condition.assertNotUndefinedAndNotNull(text, "text");
+
+    let result: string = "";
+
+    const iterator: StringIterator = StringIterator.create(text).start();
+    let insideWordSequence: boolean = false;
+    let whitespaceBuffer: string = "";
+    while (iterator.hasCurrent())
+    {
+        const current: string = iterator.takeCurrent();
+        if (isLetterOrDigit(current))
+        {
+            if (whitespaceBuffer !== "")
+            {
+                result += "-";
+                whitespaceBuffer = "";
+            }
+            result += toLowercase(current);
+
+            insideWordSequence = true;
+        }
+        else if (isWhitespace(current) || current === "-" || current === "_")
+        {
+            if (insideWordSequence)
+            {
+                whitespaceBuffer += current;
+            }
+            else
+            {
+                result += current;
+            }
+        }
+        else
+        {
+            if (whitespaceBuffer !== "")
+            {
+                result += whitespaceBuffer;
+                whitespaceBuffer = "";
+            }
+            insideWordSequence = false;
+            result += current;
+        }
+    }
+
+    if (whitespaceBuffer !== "")
+    {
+        result += whitespaceBuffer;
+        whitespaceBuffer = "";
+    }
+
+    return result;
+}
+
+export function toUpperKebabCase(text: string): string
+{
+    Pre.condition.assertNotUndefinedAndNotNull(text, "text");
+
+    let result: string = "";
+
+    const iterator: StringIterator = StringIterator.create(text).start();
+    let insideWordSequence: boolean = false;
+    let whitespaceBuffer: string = "";
+    while (iterator.hasCurrent())
+    {
+        const current: string = iterator.takeCurrent();
+        if (isLetterOrDigit(current))
+        {
+            if (whitespaceBuffer !== "")
+            {
+                result += "-";
+                whitespaceBuffer = "";
+            }
+            result += toUppercase(current);
+
+            insideWordSequence = true;
+        }
+        else if (isWhitespace(current) || current === "-" || current === "_")
+        {
+            if (insideWordSequence)
+            {
+                whitespaceBuffer += current;
+            }
+            else
+            {
+                result += current;
+            }
+        }
+        else
+        {
+            if (whitespaceBuffer !== "")
+            {
+                result += whitespaceBuffer;
+                whitespaceBuffer = "";
+            }
+            insideWordSequence = false;
+            result += current;
+        }
+    }
+
+    if (whitespaceBuffer !== "")
+    {
+        result += whitespaceBuffer;
+        whitespaceBuffer = "";
+    }
+
+    return result;
+}
