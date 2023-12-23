@@ -158,7 +158,20 @@ export function isWhitespace(value: string): boolean
  */
 export function isLetter(value: string): boolean
 {
-    return isLowercasedLetter(value) || isUppercasedLetter(value);
+    Pre.condition.assertNotUndefinedAndNotNull(value, "value");
+    Pre.condition.assertSame(1, value.length, "value.length");
+    
+    const character: string = value[0];
+    let result: boolean = false;
+    if ("A" <= character)
+    {
+        result = (character <= "Z");
+        if (!result && "a" <= character)
+        {
+            result = (character <= "z");
+        }
+    }
+    return result;
 }
 
 /**
@@ -187,6 +200,24 @@ export function isUppercasedLetter(value: string): boolean
     return ("A" <= character && character <= "Z");
 }
 
+export function isUppercased(value: string): boolean
+{
+    Pre.condition.assertNotEmpty(value, "value");
+
+    let result: boolean = true;
+
+    for (const character of value)
+    {
+        if (!isUppercasedLetter(character))
+        {
+            result = false;
+            break;
+        }
+    }
+
+    return result;
+}
+
 /**
  * Get whether the provided value only contains digits.
  * @param value The value to check.
@@ -210,7 +241,18 @@ export function isLetterOrDigit(value: string): boolean
     Pre.condition.assertSame(1, value.length, "value.length");
 
     const character: string = value[0];
-    return ("a" <= character && character <= "z") ||
-           ("A" <= character && character <= "Z") ||
-           ("0" <= character && character <= "9");
+    let result: boolean = false;
+    if ("0" <= character)
+    {
+        result = (character <= "9");
+        if (!result && "A" <= character)
+        {
+            result = (character <= "Z");
+            if (!result && "a" <= character)
+            {
+                result = (character <= "z");
+            }
+        }
+    }
+    return result;
 }
