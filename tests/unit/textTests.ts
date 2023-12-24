@@ -1,7 +1,7 @@
 import * as assert from "assert"
 
-import { escapeAndQuote } from "../../sources/strings";
 import { TextToken, TextTokenType, TextTokenizer, toCamelCase, toKebabCase, toLowercase, toPascalCase, toSnakeCase, toUpperKebabCase, toUpperSnakeCase, toUppercase } from "../../sources/text";
+import { escapeAndQuote } from "@everyonesoftware/base-typescript";
 
 suite("text.ts", () =>
 {

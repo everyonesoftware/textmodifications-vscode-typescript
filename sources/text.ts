@@ -1,7 +1,4 @@
-import { Pre } from "./condition";
-import { Iterator, StringIterator } from "./iterator";
-import { isDigit, isLowercasedLetter, isUppercasedLetter, isWhitespace } from "./strings";
-import { isString } from "./types";
+import { Iterator, Pre, StringIterator, isDigit, isLowercasedLetter, isString, isUppercasedLetter, isWhitespace } from "@everyonesoftware/base-typescript";
 
 /**
  * The different types of text tokens.

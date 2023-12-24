@@ -1,10 +1,13 @@
+.git
+.github
 .vscode/**
 .vscode-test/**
 sources/**
+tests/**
+tsconfig.json
+.eslintrc.json
 .gitignore
-test/**
-unit-tests/**
-**/tsconfig.json
-**/.eslintrc.json
+tsconfig.json
+
 **/*.map
 **/*.ts
