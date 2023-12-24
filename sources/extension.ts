@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
-
-import * as text from "./text";
+import { toCamelCase, toKebabCase, toLowercase, toPascalCase, toSnakeCase, toUpperKebabCase, toUpperSnakeCase, toUppercase } from './text';
 
 export const toLowercaseCommandId: string = "textmodifications-vscode.toLowercase";
 export const toUppercaseCommandId: string = "textmodifications-vscode.toUppercase";
@@ -34,35 +33,35 @@ export function activate(context: vscode.ExtensionContext): void
     context.subscriptions.push(
         vscode.commands.registerCommand(toLowercaseCommandId, () =>
         {
-            return applyModificationToSelection(text.toLowercase);
+            return applyModificationToSelection(toLowercase);
         }),
         vscode.commands.registerCommand(toUppercaseCommandId, () =>
         {
-            return applyModificationToSelection(text.toUppercase);
+            return applyModificationToSelection(toUppercase);
         }),
         vscode.commands.registerCommand(toCamelCaseCommandId, () =>
         {
-            return applyModificationToSelection(text.toCamelCase);
+            return applyModificationToSelection(toCamelCase);
         }),
         vscode.commands.registerCommand(toPascalCaseCommandId, () =>
         {
-            return applyModificationToSelection(text.toPascalCase);
+            return applyModificationToSelection(toPascalCase);
         }),
         vscode.commands.registerCommand(toSnakeCaseCommandId, () =>
         {
-            return applyModificationToSelection(text.toSnakeCase);
+            return applyModificationToSelection(toSnakeCase);
         }),
         vscode.commands.registerCommand(toUpperSnakeCaseCommandId, () =>
         {
-            return applyModificationToSelection(text.toUpperSnakeCase);
+            return applyModificationToSelection(toUpperSnakeCase);
         }),
         vscode.commands.registerCommand(toKebabCaseCommandId, () =>
         {
-            return applyModificationToSelection(text.toKebabCase);
+            return applyModificationToSelection(toKebabCase);
         }),
         vscode.commands.registerCommand(toUpperKebabCaseCommandId, () =>
         {
-            return applyModificationToSelection(text.toUpperKebabCase);
+            return applyModificationToSelection(toUpperKebabCase);
         }));
 }
 

@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/everyonesoftware/textmodifications-vscode-typescript"
   },
-  "version": "6.0.0",
+  "version": "7.0.0",
   "engines": {
     "vscode": "^1.84.0"
   },
@@ -129,6 +129,9 @@
     "just-unit-tests": "c8 --exclude sources/extension.ts --exclude tests/integration mocha --spec=outputs/tests/unit",
     "unit-tests": "npm run build && npm run just-unit-tests",
     "test": "npm run build && npm run just-unit-tests && npm run just-integration-tests"
+  },
+  "dependencies": {
+    "@everyonesoftware/base-typescript": "2.0.0"
   },
   "devDependencies": {
     "@types/vscode": "^1.84.0",
