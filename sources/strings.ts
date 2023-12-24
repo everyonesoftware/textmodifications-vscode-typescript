@@ -158,7 +158,20 @@ export function isWhitespace(value: string): boolean
  */
 export function isLetter(value: string): boolean
 {
-    return isLowercasedLetter(value) || isUppercasedLetter(value);
+    Pre.condition.assertNotUndefinedAndNotNull(value, "value");
+    Pre.condition.assertSame(1, value.length, "value.length");
+    
+    const character: string = value[0];
+    let result: boolean = false;
+    if ("A" <= character)
+    {
+        result = (character <= "Z");
+        if (!result && "a" <= character)
+        {
+            result = (character <= "z");
+        }
+    }
+    return result;
 }
 
 /**
@@ -210,7 +223,18 @@ export function isLetterOrDigit(value: string): boolean
     Pre.condition.assertSame(1, value.length, "value.length");
 
     const character: string = value[0];
-    return ("a" <= character && character <= "z") ||
-           ("A" <= character && character <= "Z") ||
-           ("0" <= character && character <= "9");
+    let result: boolean = false;
+    if ("0" <= character)
+    {
+        result = (character <= "9");
+        if (!result && "A" <= character)
+        {
+            result = (character <= "Z");
+            if (!result && "a" <= character)
+            {
+                result = (character <= "z");
+            }
+        }
+    }
+    return result;
 }
