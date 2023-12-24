@@ -429,8 +429,8 @@ suite("text.ts", () =>
         toPascalCaseTest("First Sentence. Second Sentence", "FirstSentence. SecondSentence");
         toPascalCaseTest("I Am Trying", "IAmTrying");
         toPascalCaseTest("abcDef ghiJkl", "AbcDefGhiJkl");
-        toPascalCaseTest("lee7 c0d3", "Lee7C0d3")
-        toPascalCaseTest("simple3test", "Simple3test");
+        toPascalCaseTest("lee7 c0d3", "Lee7C0D3")
+        toPascalCaseTest("simple3test", "Simple3Test");
         toPascalCaseTest("a-kebab-case-example", "AKebabCaseExample");
         toPascalCaseTest("a_snake_case_example", "ASnakeCaseExample");
         toPascalCaseTest("APascalCaseExample", "APascalCaseExample");

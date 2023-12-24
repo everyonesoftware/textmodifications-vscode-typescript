@@ -1,6 +1,6 @@
 import { Pre } from "./condition";
 import { Iterator, StringIterator } from "./iterator";
-import { isDigit, isLetterOrDigit, isLowercasedLetter, isUppercased, isUppercasedLetter, isWhitespace } from "./strings";
+import { isDigit, isLetterOrDigit, isLowercasedLetter, isUppercasedLetter, isWhitespace } from "./strings";
 import { isString } from "./types";
 
 /**
@@ -282,10 +282,6 @@ export function toCamelCase(text: string): string
                     result += toLowercase(current.getText());
                     insideWordSequence = true;
                 }
-                else if (isUppercased(current.getText()))
-                {
-                    result += current.getText();
-                }
                 else
                 {
                     result += toUppercase(current.getText()[0]);
@@ -335,59 +331,58 @@ export function toPascalCase(text: string): string
 
     let result: string = "";
 
-    const iterator: StringIterator = StringIterator.create(text).start();
+    const tokenizer: TextTokenizer = TextTokenizer.create(text).start();
     let insideWordSequence: boolean = false;
-    let capitalize: boolean | undefined = true;
     let whitespaceBuffer: string = "";
-    while (iterator.hasCurrent())
+    while (tokenizer.hasCurrent())
     {
-        const current: string = iterator.takeCurrent();
-        if (isLetterOrDigit(current))
+        const current: TextToken = tokenizer.takeCurrent();
+        switch (current.getType())
         {
-            whitespaceBuffer = "";
+            case TextTokenType.Word:
+                if (!insideWordSequence)
+                {
+                    result += whitespaceBuffer;
+                    insideWordSequence = true;
+                }
 
-            if (capitalize === undefined)
-            {
-                result += current;
-            }
-            else
-            {
-                result += toUppercase(current);
-                capitalize = undefined;
-            }
+                result += toUppercase(current.getText()[0]);
+                if (current.getText().length >= 2)
+                {
+                    result += current.getText().substring(1);
+                }
+                
+                whitespaceBuffer = "";
+                break;
+            
+            case TextTokenType.Digits:
+                result += current.getText();
+                break;
 
-            insideWordSequence = true;
-        }
-        else if (isWhitespace(current) || current === "-" || current === "_")
-        {
-            if (insideWordSequence)
-            {
-                whitespaceBuffer += current;
-                capitalize = true;
-            }
-            else
-            {
-                result += current;
-            }
-        }
-        else
-        {
-            if (whitespaceBuffer !== "")
-            {
+            case TextTokenType.Other:
                 result += whitespaceBuffer;
                 whitespaceBuffer = "";
-            }
-            insideWordSequence = false;
-            capitalize = true;
-            result += current;
+
+                result += current.getText();
+                insideWordSequence = false;
+                break;
+
+            case TextTokenType.Dash:
+            case TextTokenType.Underscore:
+            case TextTokenType.Whitespace:
+                if (insideWordSequence)
+                {
+                    whitespaceBuffer += current.getText();
+                }
+                else
+                {
+                    result += current.getText();
+                }
+                break;
         }
     }
 
-    if (whitespaceBuffer !== "")
-    {
-        result += whitespaceBuffer;
-        whitespaceBuffer = "";
-    }
+    result += whitespaceBuffer;
 
     return result;
 }

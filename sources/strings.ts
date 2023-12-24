@@ -200,24 +200,6 @@ export function isUppercasedLetter(value: string): boolean
     return ("A" <= character && character <= "Z");
 }
 
-export function isUppercased(value: string): boolean
-{
-    Pre.condition.assertNotEmpty(value, "value");
-
-    let result: boolean = true;
-
-    for (const character of value)
-    {
-        if (!isUppercasedLetter(character))
-        {
-            result = false;
-            break;
-        }
-    }
-
-    return result;
-}
-
 /**
  * Get whether the provided value only contains digits.
  * @param value The value to check.
