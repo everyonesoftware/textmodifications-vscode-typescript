@@ -1,5 +1,9 @@
 # Change Log
 
+## 6.0.0
+
+- Add TextTokenizer and update all functions to use it
+
 ## 5.0.0
 
 - Add Kebab case and Upper Kebab case
