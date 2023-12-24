@@ -1,6 +1,6 @@
 import { Pre } from "./condition";
 import { Iterator, StringIterator } from "./iterator";
-import { isDigit, isLetterOrDigit, isLowercasedLetter, isUppercasedLetter, isWhitespace } from "./strings";
+import { isDigit, isLowercasedLetter, isUppercasedLetter, isWhitespace } from "./strings";
 import { isString } from "./types";
 
 /**
@@ -529,43 +529,56 @@ export function toKebabCase(text: string): string
 
     let result: string = "";
 
-    const iterator: StringIterator = StringIterator.create(text).start();
+    const tokenizer: TextTokenizer = TextTokenizer.create(text).start();
+
     let insideWordSequence: boolean = false;
     let whitespaceBuffer: string = "";
-    while (iterator.hasCurrent())
+    while (tokenizer.hasCurrent())
     {
-        const current: string = iterator.takeCurrent();
-        if (isLetterOrDigit(current))
+        const current: TextToken = tokenizer.takeCurrent();
+        switch (current.getType())
         {
-            if (whitespaceBuffer !== "")
-            {
-                result += "-";
-                whitespaceBuffer = "";
-            }
-            result += toLowercase(current);
+            case TextTokenType.Word:
+                if (!insideWordSequence)
+                {
+                    result += whitespaceBuffer;
+                    insideWordSequence = true;
+                }
+                else
+                {
+                    result += "-";
+                }
 
-            insideWordSequence = true;
-        }
-        else if (isWhitespace(current) || current === "-" || current === "_")
-        {
-            if (insideWordSequence)
-            {
-                whitespaceBuffer += current;
-            }
-            else
-            {
-                result += current;
-            }
-        }
-        else
-        {
-            if (whitespaceBuffer !== "")
-            {
+                result += toLowercase(current.getText());
+
+                insideWordSequence = true;
+                whitespaceBuffer = "";
+                break;
+
+            case TextTokenType.Digits:
+                result += current.getText();
+                break;
+
+            case TextTokenType.Other:
                 result += whitespaceBuffer;
                 whitespaceBuffer = "";
-            }
-            insideWordSequence = false;
-            result += current;
+
+                result += current.getText();
+                insideWordSequence = false;
+                break;
+
+            case TextTokenType.Dash:
+            case TextTokenType.Underscore:
+            case TextTokenType.Whitespace:
+                if (insideWordSequence)
+                {
+                    whitespaceBuffer += current.getText();
+                }
+                else
+                {
+                    result += current.getText();
+                }
+                break;
         }
     }
 
@@ -584,43 +597,56 @@ export function toUpperKebabCase(text: string): string
 
     let result: string = "";
 
-    const iterator: StringIterator = StringIterator.create(text).start();
+    const tokenizer: TextTokenizer = TextTokenizer.create(text).start();
+
     let insideWordSequence: boolean = false;
     let whitespaceBuffer: string = "";
-    while (iterator.hasCurrent())
+    while (tokenizer.hasCurrent())
     {
-        const current: string = iterator.takeCurrent();
-        if (isLetterOrDigit(current))
+        const current: TextToken = tokenizer.takeCurrent();
+        switch (current.getType())
         {
-            if (whitespaceBuffer !== "")
-            {
-                result += "-";
-                whitespaceBuffer = "";
-            }
-            result += toUppercase(current);
+            case TextTokenType.Word:
+                if (!insideWordSequence)
+                {
+                    result += whitespaceBuffer;
+                    insideWordSequence = true;
+                }
+                else
+                {
+                    result += "-";
+                }
 
-            insideWordSequence = true;
-        }
-        else if (isWhitespace(current) || current === "-" || current === "_")
-        {
-            if (insideWordSequence)
-            {
-                whitespaceBuffer += current;
-            }
-            else
-            {
-                result += current;
-            }
-        }
-        else
-        {
-            if (whitespaceBuffer !== "")
-            {
+                result += toUppercase(current.getText());
+
+                insideWordSequence = true;
+                whitespaceBuffer = "";
+                break;
+
+            case TextTokenType.Digits:
+                result += current.getText();
+                break;
+
+            case TextTokenType.Other:
                 result += whitespaceBuffer;
                 whitespaceBuffer = "";
-            }
-            insideWordSequence = false;
-            result += current;
+
+                result += current.getText();
+                insideWordSequence = false;
+                break;
+
+            case TextTokenType.Dash:
+            case TextTokenType.Underscore:
+            case TextTokenType.Whitespace:
+                if (insideWordSequence)
+                {
+                    whitespaceBuffer += current.getText();
+                }
+                else
+                {
+                    result += current.getText();
+                }
+                break;
         }
     }
 
