@@ -1,5 +1,9 @@
 # Change Log
 
+## 7.0.0
+
+- Extract common code to @everyonesoftware/base-typescript
+
 ## 6.0.0
 
 - Add TextTokenizer and update all functions to use it
