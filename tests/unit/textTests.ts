@@ -451,7 +451,7 @@ suite("toSnakeCase(string)", () =>
 
     toSnakeCaseTest("", "");
     toSnakeCaseTest("abc", "abc");
-    toSnakeCaseTest("abcDef", "abcdef");
+    toSnakeCaseTest("abcDef", "abc_def");
     toSnakeCaseTest("abc def", "abc_def");
     toSnakeCaseTest("abc def ghi", "abc_def_ghi");
     toSnakeCaseTest("abc DEF ghi", "abc_def_ghi");
@@ -460,15 +460,15 @@ suite("toSnakeCase(string)", () =>
     toSnakeCaseTest("HTTP", "http");
     toSnakeCaseTest("HTTP Client", "http_client");
     toSnakeCaseTest("HTTPClient", "httpclient");
-    toSnakeCaseTest("httpClient", "httpclient");
+    toSnakeCaseTest("httpClient", "http_client");
     toSnakeCaseTest("My HTTP Client", "my_http_client");
-    toSnakeCaseTest("myHTTPClient", "myhttpclient");
+    toSnakeCaseTest("myHTTPClient", "my_httpclient");
     toSnakeCaseTest("First Sentence. Second Sentence", "first_sentence. second_sentence");
     toSnakeCaseTest("a b . . . c d", "a_b . . . c_d");
     toSnakeCaseTest("I Am Trying", "i_am_trying");
-    toSnakeCaseTest("abcDef ghiJkl", "abcdef_ghijkl");
-    toSnakeCaseTest("lee7 c0d3", "lee7_c0d3")
-    toSnakeCaseTest("simple3test", "simple3test");
+    toSnakeCaseTest("abcDef ghiJkl", "abc_def_ghi_jkl");
+    toSnakeCaseTest("lee7 c0d3", "lee7_c0_d3")
+    toSnakeCaseTest("simple3test", "simple3_test");
     toSnakeCaseTest("a-kebab-case-example", "a_kebab_case_example");
     toSnakeCaseTest("a_snake_case_example", "a_snake_case_example");
     toSnakeCaseTest("APascalCaseExample", "apascal_case_example");
@@ -487,7 +487,7 @@ suite("toUpperSnakeCase(string)", () =>
 
     toUpperSnakeCaseTest("", "");
     toUpperSnakeCaseTest("abc", "ABC");
-    toUpperSnakeCaseTest("abcDef", "ABCDEF");
+    toUpperSnakeCaseTest("abcDef", "ABC_DEF");
     toUpperSnakeCaseTest("abc def", "ABC_DEF");
     toUpperSnakeCaseTest("abc def ghi", "ABC_DEF_GHI");
     toUpperSnakeCaseTest("abc DEF ghi", "ABC_DEF_GHI");
@@ -496,15 +496,15 @@ suite("toUpperSnakeCase(string)", () =>
     toUpperSnakeCaseTest("HTTP", "HTTP");
     toUpperSnakeCaseTest("HTTP Client", "HTTP_CLIENT");
     toUpperSnakeCaseTest("HTTPClient", "HTTPCLIENT");
-    toUpperSnakeCaseTest("httpClient", "HTTPCLIENT");
+    toUpperSnakeCaseTest("httpClient", "HTTP_CLIENT");
     toUpperSnakeCaseTest("My HTTP Client", "MY_HTTP_CLIENT");
-    toUpperSnakeCaseTest("myHTTPClient", "MYHTTPCLIENT");
+    toUpperSnakeCaseTest("myHTTPClient", "MY_HTTPCLIENT");
     toUpperSnakeCaseTest("First Sentence. Second Sentence", "FIRST_SENTENCE. SECOND_SENTENCE");
     toUpperSnakeCaseTest("a b . . . c d", "A_B . . . C_D");
     toUpperSnakeCaseTest("I Am Trying", "I_AM_TRYING");
-    toUpperSnakeCaseTest("abcDef ghiJkl", "ABCDEF_GHIJKL");
-    toUpperSnakeCaseTest("lee7 c0d3", "LEE7_C0D3")
-    toUpperSnakeCaseTest("simple3test", "SIMPLE3TEST");
+    toUpperSnakeCaseTest("abcDef ghiJkl", "ABC_DEF_GHI_JKL");
+    toUpperSnakeCaseTest("lee7 c0d3", "LEE7_C0_D3")
+    toUpperSnakeCaseTest("simple3test", "SIMPLE3_TEST");
     toUpperSnakeCaseTest("a-kebab-case-example", "A_KEBAB_CASE_EXAMPLE");
     toUpperSnakeCaseTest("a_snake_case_example", "A_SNAKE_CASE_EXAMPLE");
     toUpperSnakeCaseTest("APascalCaseExample", "APASCAL_CASE_EXAMPLE");
@@ -549,7 +549,7 @@ suite("toKebabCase(string)", () =>
     toKebabCaseTest("AnotherPascalCaseExample", "another-pascal-case-example");
 });
 
-suite("toUpperSnakeCase(string)", () =>
+suite("toUpperKebabCase(string)", () =>
 {
     function toUpperKebabCaseTest(value: string, expected: string): void
     {
