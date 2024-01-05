@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { toCamelCase, toKebabCase, toLowercase, toPascalCase, toSnakeCase, toUpperKebabCase, toUpperSnakeCase, toUppercase } from './text';
+import { toCamelCase, toKebabCase, toLowercase, toPascalCase, toSnakeCase, toUpperKebabCase, toUpperSnakeCase, toUppercase } from "@everyonesoftware/base-typescript";
 
 export const toLowercaseCommandId: string = "textmodifications-vscode.toLowercase";
 export const toUppercaseCommandId: string = "textmodifications-vscode.toUppercase";
@@ -12,57 +12,35 @@ export const toUpperKebabCaseCommandId: string = "textmodifications-vscode.toUpp
 
 export function activate(context: vscode.ExtensionContext): void
 {
-    async function applyModificationToSelection(modification: (value: string) => string): Promise<void>
+    async function registerSelectionCommand(commandId: string, modification: (value: string) => string): Promise<void>
     {
-        const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
-        if (editor !== undefined)
+        context.subscriptions.push(vscode.commands.registerCommand(commandId, async () =>
         {
-            await editor.edit((editBuilder: vscode.TextEditorEdit) =>
+            const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
+            if (editor !== undefined)
             {
-                const document: vscode.TextDocument = editor.document;
-                for (const selection of editor.selections)
+                await editor.edit((editBuilder: vscode.TextEditorEdit) =>
                 {
-                    const selectionText: string = document.getText(selection);
-                    const modifiedText: string = modification(selectionText);
-                    editBuilder.replace(selection, modifiedText);
-                }
-            });
-        }
+                    const document: vscode.TextDocument = editor.document;
+                    for (const selection of editor.selections)
+                    {
+                        const selectionText: string = document.getText(selection);
+                        const modifiedText: string = modification(selectionText);
+                        editBuilder.replace(selection, modifiedText);
+                    }
+                });
+            }
+        }));
     }
 
-    context.subscriptions.push(
-        vscode.commands.registerCommand(toLowercaseCommandId, () =>
-        {
-            return applyModificationToSelection(toLowercase);
-        }),
-        vscode.commands.registerCommand(toUppercaseCommandId, () =>
-        {
-            return applyModificationToSelection(toUppercase);
-        }),
-        vscode.commands.registerCommand(toCamelCaseCommandId, () =>
-        {
-            return applyModificationToSelection(toCamelCase);
-        }),
-        vscode.commands.registerCommand(toPascalCaseCommandId, () =>
-        {
-            return applyModificationToSelection(toPascalCase);
-        }),
-        vscode.commands.registerCommand(toSnakeCaseCommandId, () =>
-        {
-            return applyModificationToSelection(toSnakeCase);
-        }),
-        vscode.commands.registerCommand(toUpperSnakeCaseCommandId, () =>
-        {
-            return applyModificationToSelection(toUpperSnakeCase);
-        }),
-        vscode.commands.registerCommand(toKebabCaseCommandId, () =>
-        {
-            return applyModificationToSelection(toKebabCase);
-        }),
-        vscode.commands.registerCommand(toUpperKebabCaseCommandId, () =>
-        {
-            return applyModificationToSelection(toUpperKebabCase);
-        }));
+    registerSelectionCommand(toLowercaseCommandId, toLowercase);
+    registerSelectionCommand(toUppercaseCommandId, toUppercase);
+    registerSelectionCommand(toCamelCaseCommandId, toCamelCase);
+    registerSelectionCommand(toPascalCaseCommandId, toPascalCase);
+    registerSelectionCommand(toSnakeCaseCommandId, toSnakeCase);
+    registerSelectionCommand(toUpperSnakeCaseCommandId, toUpperSnakeCase);
+    registerSelectionCommand(toKebabCaseCommandId, toKebabCase);
+    registerSelectionCommand(toUpperKebabCaseCommandId, toUpperKebabCase);
 }
 
 export function deactivate(): void
