@@ -1,7 +1,7 @@
-import * as assert from 'assert';
+import * as assert from "assert";
 
-import * as vscode from 'vscode';
-import * as extension from "../../sources/extension"
+import * as vscode from "vscode";
+import * as extension from "../../sources/extension";
 
 suite("Integration Tests", () => {
     test("execute non-existing command", async () =>
