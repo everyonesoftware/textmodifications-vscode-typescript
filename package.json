@@ -127,7 +127,7 @@
     "test": "npm run build && npm run just-integration-tests"
   },
   "dependencies": {
-    "@everyonesoftware/base-typescript": "6.0.0"
+    "@everyonesoftware/base-typescript": "7.0.0"
   },
   "devDependencies": {
     "@types/assert": "1.5.10",
