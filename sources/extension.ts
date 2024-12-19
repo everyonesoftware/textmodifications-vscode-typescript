@@ -1,5 +1,10 @@
-import * as vscode from 'vscode';
 import { toCamelCase, toKebabCase, toLowercase, toPascalCase, toSnakeCase, toUpperKebabCase, toUpperSnakeCase, toUppercase } from "@everyonesoftware/base-typescript";
+
+import * as vscode from 'vscode';
+
+import { VsCodeProcess } from './vsCodeProcess';
+import { TextEditor } from './textEditor';
+import { MutableTextEditor } from './mutableTextEditor';
 
 export const toLowercaseCommandId: string = "textmodifications-vscode.toLowercase";
 export const toUppercaseCommandId: string = "textmodifications-vscode.toUppercase";
@@ -12,25 +17,24 @@ export const toUpperKebabCaseCommandId: string = "textmodifications-vscode.toUpp
 
 export function activate(context: vscode.ExtensionContext): void
 {
-    async function registerSelectionCommand(commandId: string, modification: (value: string) => string): Promise<void>
+    const process: VsCodeProcess = VsCodeProcess.create(context);
+
+    function registerSelectionCommand(commandId: string, modification: (value: string) => string): void
     {
-        context.subscriptions.push(vscode.commands.registerCommand(commandId, async () =>
+        process.registerCommand(commandId, async () =>
         {
-            const editor: vscode.TextEditor | undefined = vscode.window.activeTextEditor;
+            const editor: TextEditor | undefined = process.getActiveTextEditor();
             if (editor !== undefined)
             {
-                await editor.edit((editBuilder: vscode.TextEditorEdit) =>
+                await editor.edit((mutableEditor: MutableTextEditor) =>
                 {
-                    const document: vscode.TextDocument = editor.document;
-                    for (const selection of editor.selections)
+                    for (const mutableSelection of mutableEditor.getSelections())
                     {
-                        const selectionText: string = document.getText(selection);
-                        const modifiedText: string = modification(selectionText);
-                        editBuilder.replace(selection, modifiedText);
+                        mutableSelection.setText(modification(mutableSelection.getText()));
                     }
                 });
             }
-        }));
+        });
     }
 
     registerSelectionCommand(toLowercaseCommandId, toLowercase);
