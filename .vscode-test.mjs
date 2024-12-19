@@ -11,9 +11,9 @@ function generateConfiguration(versionString)
 }
 
 export default defineConfig([
-    generateConfiguration("1.83.0"),
+    // generateConfiguration("1.83.0"),
 
-    // generateConfiguration("1.85.2"),
+    generateConfiguration("1.85.2"),
 
     // generateConfiguration("1.86.0"),
     // Error: Illegal argument: TextEditor(vs.editor.ICodeEditor:1,$model4)
@@ -43,5 +43,7 @@ export default defineConfig([
     //   at r.fire (vscode-file://vscode-app/c:/Users/dansc/Sources/text-vscode-typescript/.vscode-test/vscode-win32-x64-archive-1.89.1/resources/app/out/vs/workbench/workbench.desktop.main.js:629:14507)  
     //   at H.onmessage (vscode-file://vscode-app/c:/Users/dansc/Sources/text-vscode-typescript/.vscode-test/vscode-win32-x64-archive-1.89.1/resources/app/out/vs/workbench/workbench.desktop.main.js:1648:8048)
 
-    // generateConfiguration("stable"), // 1.89.1
+    // generateConfiguration("1.96.1"),
+
+    // generateConfiguration("stable"), // 1.96.1
 ]);

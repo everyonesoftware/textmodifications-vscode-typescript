@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/everyonesoftware/textmodifications-vscode-typescript"
   },
-  "version": "10.0.0",
+  "version": "11.0.0",
   "engines": {
     "vscode": "^1.83.0"
   },
@@ -123,15 +123,16 @@
   },
   "scripts": {
     "build": "tsc && eslint sources tests --ext ts --max-warnings 0 && node package.js",
+    "clean": "rimraf outputs",
     "just-integration-tests": "c8 vscode-test",
     "test": "npm run build && npm run just-integration-tests"
   },
   "dependencies": {
-    "@everyonesoftware/base-typescript": "20.0.0"
+    "@everyonesoftware/base-typescript": "28.0.0"
   },
   "devDependencies": {
-    "@everyonesoftware/test-typescript": "6.0.0",
-    "@everyonesoftware/mocha-typescript": "6.0.0",
+    "@everyonesoftware/test-typescript": "15.0.0",
+    "@everyonesoftware/mocha-typescript": "7.0.0",
     "@types/node": "20.14.0",
     "@types/vscode": "1.83.0",
     "@typescript-eslint/eslint-plugin": "7.12.0",
@@ -144,7 +145,8 @@
     "eslint": "8.57.0",
     "npm-dts": "1.3.12",
     "source-map-support": "0.5.21",
-    "typescript": "5.4.5"
+    "typescript": "5.7.2",
+    "rimraf": "6.0.1"
   },
   "mocha": {
       "color": true,
